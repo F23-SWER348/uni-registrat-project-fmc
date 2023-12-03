@@ -41,9 +41,9 @@ public LocalTime getTime() {
 public void setTime(LocalTime time) {
     this.time = time;
 }
-public ArrayList<Course> getCourse() {
-    return student.getCourse();
-}
+// public ArrayList<Course> getCourse() {
+//     return student.getCourse();
+// }
 public void setCourse(Course course) {
     student.setCourse(course);
 }

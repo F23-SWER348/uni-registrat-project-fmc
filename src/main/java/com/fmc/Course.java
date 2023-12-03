@@ -12,9 +12,15 @@ private String shortcut;
 private static int credits;
 private Staff staff;
 private Semester semester;
-ArrayList<Student> student ;
-protected Map<Course, ArrayList<Course> > semesterCourse = new HashMap<>();
-ArrayList<Course> c=new ArrayList<>();
+protected Map<Semester, ArrayList<Course> > semesterCourse = new HashMap<>();
+protected Map<Staff, ArrayList<Course> > staffCourse = new HashMap<>();
+protected Map<Course, ArrayList<Student> > studentCourse = new HashMap<>();
+
+ArrayList<Course> c=new ArrayList<>();// c يعني semesterCourseArray
+ArrayList<Course> staffCourseArray=new ArrayList<>();
+ArrayList<Student> studentCourseArray=new ArrayList<>();
+
+
 public Course(){};
 public Course(String name, String shortcut, int credits, Staff staff, Semester semester,Faculty faculty) {
     super();
@@ -23,8 +29,11 @@ public Course(String name, String shortcut, int credits, Staff staff, Semester s
     this.credits = credits;
     this.staff = staff;
     this.semester = semester;
-   this.c.add(this);
+    this.staffCourseArray.add(this);
+     this.staffCourse.put(staff, staffCourseArray);
+    this.c.add(this);
     this.semesterCourse.put(semester, c);
+    this.studentCourse.put(this, studentCourseArray);
 }
 
 
@@ -36,6 +45,10 @@ public Course(String name, String shortcut,int credits, Semester semester,Facult
     this.semester = semester;
      this.c.add(this);
     this.semesterCourse.put(semester, c);
+      this.staffCourseArray.add(this);
+        this.staffCourse.put(staff, staffCourseArray);
+            this.studentCourse.put(this, studentCourseArray);
+
  
 }
 
@@ -93,14 +106,17 @@ public void setSemester(Semester semester) {
 
 
 public ArrayList<Student> getStudent() {///////////
-    return student;
+    return studentCourseArray;
 }
 
 
 public void setStudent(Student student) {
-    this.student.add(student);//السعة
-}
 
+    this.studentCourseArray.add(student);//السعة
+}
+public void removeStudent(Student student) {
+    this.studentCourseArray.remove(student);//السعة
+}
 
 
 
