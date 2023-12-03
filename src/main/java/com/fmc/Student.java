@@ -98,6 +98,11 @@ public Double GPA() {
     return sum / grade.size();
 }
 
+//هاي هبدد
+public Double GPA2() {
+    double sum = this.grade.values().stream().mapToDouble(e->e*Course.getCredits()).sum();//((Course)(grade.get(e)))
+    return sum / grade.size();
+}
 
 
 

@@ -56,8 +56,11 @@ else{
 }
 
 }
+//برضو هبد
 
-
+public void setCoursess(Course course) {
+    this.courses.add(course);
+}
 
 
 
