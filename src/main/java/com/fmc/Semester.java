@@ -70,8 +70,11 @@ this.c.remove(removes);//اتأكد اذا هي شغالةة
 }
 
 
-
-
+//wrong
+public void removeCourser(Course course){
+ this.c.remove(course);
+  
+}
 
 
 

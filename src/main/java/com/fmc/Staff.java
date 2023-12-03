@@ -65,6 +65,12 @@ else{
 
 }
 
+//wrong
+public void setCoursess(Course course) {
+    ArrayList<Course> temp =staffCourse.get(this);
+    temp.add(course);
+    staffCourse.put(this, temp);
+}
 
 
 

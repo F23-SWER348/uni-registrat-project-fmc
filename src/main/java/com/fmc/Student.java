@@ -87,6 +87,11 @@ public Double GPA() {
     return sum / grade.size();
 }
 
+//wrong
+public Double GPA22() {
+    double sum = this.grade.values().stream().mapToDouble(e->e*Course.getCredits()).sum();//((Course)(grade.get(e)))
+    return sum / grade.size();
+}
 
 
 
