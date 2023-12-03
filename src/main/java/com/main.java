@@ -12,7 +12,8 @@ import com.fmc.Student;
 public class main {
     
 //mai
-//celina
+//maii
+
 
 public static void main(String[] args) {
     LocalDate year=new LocalDateOf(2023);
@@ -28,7 +29,7 @@ ArrayList<Course> suhailCourse=new ArrayList<>();
 }
 
 
-
+///////////////////////
 
 
 
