@@ -20,6 +20,7 @@ public Semester(int year, LocalDate start, LocalDate end) {
     this.end = end;
 }
 
+
 public int getYear() {
     return year;
 }
@@ -68,14 +69,6 @@ public void removeCourse(String Namecourse){
 List<String> removes = this.c.stream().map(e -> e.getName().toLowerCase()).filter(e -> e.equals(Namecourse.toLowerCase())).collect(Collectors.toList());
 this.c.remove(removes);//اتأكد اذا هي شغالةة
 }
-
-
-//wrong
-public void removeCourser(Course course){
- this.c.remove(course);
-  
-}
-
 
 
 

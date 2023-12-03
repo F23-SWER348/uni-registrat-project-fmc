@@ -57,19 +57,12 @@ public void assignGrade(Student student,Course course,Double grade ) throws Inte
     int test =(int) cour.stream().filter(e->e.equals(student)).count();
     if(test!=0&&testCours!=0){
 ArrayBlockingQueue<Student> gpas=new ArrayBlockingQueue<>(2);
-student.getGrade(student.grade(course, grade) );
+student.setGrade(course, grade) ;
 gpas.put(student);}
 else{
     System.out.println("not exist");
 }
 
-}
-
-//wrong
-public void setCoursess(Course course) {
-    ArrayList<Course> temp =staffCourse.get(this);
-    temp.add(course);
-    staffCourse.put(this, temp);
 }
 
 

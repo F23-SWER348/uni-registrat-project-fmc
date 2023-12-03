@@ -1,8 +1,11 @@
 package com.fmc;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Student extends Grade {
@@ -12,7 +15,8 @@ private int id;
 private String contact;
 private double gpa;
  Map<Course,Double> grade =new HashMap<>();
-ArrayList<Course> course;
+ 
+// ArrayList<Course> course;
 
 
 public Student(){};
@@ -61,38 +65,47 @@ public void setContact(String contact) {
 
 
 
+public List<Course> getCourse() {
+     List<Course> s= (List<Course>) Stream.of(studentCourse).map(e -> Stream.of(e)).reduce((e1, e2) -> Stream.concat(e1, e2)).filter(e->e.equals(this)).get();
+// ArrayList<Course> s= Stream.of(studentCourse).collect(Collectors.groupingBy(e->e. );
+// .forEach((k,v)->Stream.of(v).filter(e->e.equals(this)));
+// 
+// .anyMatch(e->e.equals(this)).collect(collector.toList);
 
-// public ArrayList<Course> getCourse() {
-// ArrayList<Course> s= Stream.of(studentCourse).anyMatch(e->e.equals(this)).collect(collector.toList);
-
-//     return course;
-// }
+    return s;
+}
 public void setCourse(Course course) {
-  this.course.add(course);
+    studentCourse.get(course).add(this);
+ 
 }
-public Map<Course, Double> getGrade() {
-    return grade;
+public Double getGrade(Course course) {
+   return this.grade.get(course);
+    
 }
 
 
-public void setGrade(Map<Course, Double> grade) {
-    this.grade = grade;
+public void setGrade( Course c,Double b) {
+    this.grade.put(c, b);
 }
 
 
 
 
 public Double GPA() {
-    double sum = this.grade.values().stream().mapToDouble(e->e*Course.getCredits()).sum();//((Course)(grade.get(e)))
-    return sum / grade.size();
-}
+    // grade.forEach((k,v)->k.getCredits * v);
+    // double sum = Stream.of(this.grade)
+    // .reduce(1,(k,v)->k *v)
+    // .mapToDouble(e->e * Course.getCredits()).sum();//((Course)(grade.get(e)))
+    // return sum / grade.size();
+//    Stream.of( grade).forEach((k,v)->k.getCredits()*v).sum();
+   
+    // double sum = grade.entrySet().stream()
+    // .mapToDouble(entry -> entry.getValue() * (Course)entry.getKey().getCredits()).sum();
 
-//wrong
-public Double GPA22() {
-    double sum = this.grade.values().stream().mapToDouble(e->e*Course.getCredits()).sum();//((Course)(grade.get(e)))
-    return sum / grade.size();
+double totalCredits = grade.keySet().stream().mapToDouble(e->((Course)e).getCredits()).sum();
+// return sum / totalCredits;
+return 0.0;
 }
-
 
 
 
