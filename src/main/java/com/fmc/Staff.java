@@ -8,7 +8,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Staff  extends Student{
-    
+   ArrayList<Course> staffCourseArray=new ArrayList<>();
+
 private String name;
 private String email;
 private long phoneNumber;
@@ -46,8 +47,11 @@ public void setPhoneNumber(long phoneNumber) {
     this.phoneNumber = phoneNumber;
     
 }
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 56cc727db9c018b2a90fcea8da54d315c36d92d1
 public ArrayList<Course> getCourse(String staffName) {///جاهزة
   ArrayList<Course>st=staffCourse.get(this);
     return st;
@@ -59,6 +63,7 @@ public void setCourse(Course course) {
     temp.add(course);
     staffCourse.put(this, temp);
    
+<<<<<<< HEAD
 }
 public void assignGrade(Student student,Course course,Double grade ) throws InterruptedException{// لازم اتأكد انو المادة موجودة جاهزة
     
@@ -71,14 +76,38 @@ student.setGrade(course, grade) ;
 gpas.put(student);}
 else{
     System.out.println("not exist");
+=======
+>>>>>>> 56cc727db9c018b2a90fcea8da54d315c36d92d1
 }
+// public void assignGrade(Student student,Course course,Double grade ) throws InterruptedException{// لازم اتأكد انو المادة موجودة جاهزة
+    
+//     int testCours=(int)( Stream.of(staffCourse).filter(e->e.equals(course)).count());
+//     ArrayList<Student>cour=course.getStudent();
+//     int test =(int) cour.stream().filter(e->e.equals(student)).count();
+//     if(test!=0&&testCours!=0){
+// ArrayBlockingQueue<Student> gpas=new ArrayBlockingQueue<>(2);
+// student.setGrade(course, grade) ;
+// gpas.put(student);}
+// else{
+//     System.out.println("not exist");
+// }
+
+// }
+
+
+
+
+public ArrayList<Course> getCourse() {
+    return staffCourseArray;
+ }
+ public void addCourse(Course course1){
+    staffCourseArray.add(course1);
+ }
+
+<<<<<<< HEAD
+
 
 }
-
-
-
-
-
-
-
+=======
 }
+>>>>>>> 56cc727db9c018b2a90fcea8da54d315c36d92d1

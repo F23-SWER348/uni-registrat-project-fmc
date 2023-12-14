@@ -2,12 +2,15 @@ package com.fmc;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Semester extends Course{
    
-    
+    ArrayList<Course> c=new ArrayList<>();// c يعني semesterCourseArray
+
 private int year;
 private LocalDate start;
 private LocalDate end;
@@ -74,4 +77,8 @@ this.c.remove(removes);//اتأكد اذا هي شغالةة
 
 
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 56cc727db9c018b2a90fcea8da54d315c36d92d1
