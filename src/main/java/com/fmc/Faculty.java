@@ -4,7 +4,7 @@ package com.fmc;
 
 public class Faculty  {
     
-
+//intttttttttttttttttttttttttt
 private String name;
 private String contact;
 
