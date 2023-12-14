@@ -8,7 +8,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Staff  extends Student{
-    
+   ArrayList<Course> staffCourseArray=new ArrayList<>();
+
 private String name;
 private String email;
 private long phoneNumber;
@@ -50,25 +51,29 @@ public void setCourse(Course course) {
     staffCourse.put(this, temp);
    
 }
-public void assignGrade(Student student,Course course,Double grade ) throws InterruptedException{// لازم اتأكد انو المادة موجودة جاهزة
+// public void assignGrade(Student student,Course course,Double grade ) throws InterruptedException{// لازم اتأكد انو المادة موجودة جاهزة
     
-    int testCours=(int)( Stream.of(staffCourse).filter(e->e.equals(course)).count());
-    ArrayList<Student>cour=course.getStudent();
-    int test =(int) cour.stream().filter(e->e.equals(student)).count();
-    if(test!=0&&testCours!=0){
-ArrayBlockingQueue<Student> gpas=new ArrayBlockingQueue<>(2);
-student.setGrade(course, grade) ;
-gpas.put(student);}
-else{
-    System.out.println("not exist");
-}
+//     int testCours=(int)( Stream.of(staffCourse).filter(e->e.equals(course)).count());
+//     ArrayList<Student>cour=course.getStudent();
+//     int test =(int) cour.stream().filter(e->e.equals(student)).count();
+//     if(test!=0&&testCours!=0){
+// ArrayBlockingQueue<Student> gpas=new ArrayBlockingQueue<>(2);
+// student.setGrade(course, grade) ;
+// gpas.put(student);}
+// else{
+//     System.out.println("not exist");
+// }
 
-}
-
-
+// }
 
 
 
 
+public ArrayList<Course> getCourse() {
+    return staffCourseArray;
+ }
+ public void addCourse(Course course1){
+    staffCourseArray.add(course1);
+ }
 
 }
