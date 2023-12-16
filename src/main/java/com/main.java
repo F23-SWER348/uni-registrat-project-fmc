@@ -1,6 +1,7 @@
 package com;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -46,8 +47,13 @@ Student FatmaStu=new Student("fatma", 202109442, "fat@gmail");
 Student MaiStu=new Student("mai", 2021094423, "fat@gmail");
 Student CelinaStu=new Student("celina", 2021094423, "fat@gmail");
 math1.setStudent(CelinaStu);
+math2.setStudent(CelinaStu);
+math1.setStart( LocalTime.of(8, 0, 0));
 math2.setStudent(FatmaStu);
 math1.setStudent(FatmaStu);
+math2.setStart( LocalTime.of(7, 30, 0));
+Schedule celinaSchedule = new Schedule (CelinaStu);
+celinaSchedule.conflect();//نجحت والرب يبارك الجميع هيدي قوة التركيز
 // System.out.println(FatmaSchedual.toString());//ما نجحت 
 // math1.removeStudent(202109442);// الحمد لله نجاح باهر 
 // Stream.of(math1.getStudent()).forEach(e->System.out.print("The Science Courses : 1"+e.toString()+"\n" )); // التجربة الاولى غلط

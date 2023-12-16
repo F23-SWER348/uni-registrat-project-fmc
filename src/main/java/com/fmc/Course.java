@@ -1,5 +1,7 @@
 package com.fmc;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,13 +16,19 @@ private String name;
 private String shortcut;
 private  int credits;
 private Staff staff;
-private Semester semester;
+private Semester semester; 
+LocalTime start;
+   LocalTime end;
+
+//    private LocalDate day; مش كثير مفهومة
 // protected Map<Course, ArrayList<Student> > studentCourse = new HashMap<>(); //طلاب الكورس 
 
 // ArrayList =new ArrayList<>();
  BlockingQueue<Student> studentCourseArray = new LinkedBlockingQueue<>(30);
 
-public Course(){};
+public Course(){
+    CourseList.add(this);
+};
 public Course(String name, String shortcut, int credits, Staff staff, Semester semester,Faculty faculty) {
     super();
     this.name = name;
@@ -28,6 +36,7 @@ public Course(String name, String shortcut, int credits, Staff staff, Semester s
     this.credits = credits;
     this.staff = staff;
     this.semester = semester;
+  CourseList.add(this);
     staff.addCourse(this);
     user.staffCourse.put(staff, staff.staffCourseArray);
     semester.c.add(this);
@@ -40,6 +49,7 @@ public Course(String name, String shortcut, int credits, Staff staff, Semester s
 
 public Course(String name, String shortcut,int credits, Semester semester,Faculty faculty) {
     super();
+    CourseList.add(this);
     this.name = name;
     this.shortcut = shortcut;
     this.semester = semester;
@@ -83,16 +93,24 @@ public void setCredits(int credits) {
 }
 
 
-public Staff getStaff() {
-    return staff;
+public LocalTime getStart() {
+    return start;
 }
 
 
-public void setStaff(Staff staff) {
-    this.staff = staff;
+public void setStart(LocalTime start) {
+    this.start = start;
 }
 
 
+public LocalTime getEnd() {
+    return end;
+}
+
+
+public void setEnd(LocalTime end) {
+    this.end=end;
+}
 
 
 public Semester getSemester() {

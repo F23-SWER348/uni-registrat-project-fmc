@@ -1,6 +1,7 @@
 package com.fmc;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
@@ -10,27 +11,20 @@ ArrayList<Course> ScheCourse=new ArrayList<>();;
 
 private LocalDate day;
 private LocalDate time;
-private Semester semester;
-private Faculty faculty;
+ArrayList<Course>stuORstaffCourse;
 Student student;
 
 
 //الاريي تاعت كورسات الستيودنت راح نقرأها من فايل
-public Schedule(LocalDate day, LocalDate end,  Semester semester, Faculty faculty,Student student) {
+public Schedule(Student student) {
        super();
-    this.day = day;
-        this.time = end;
-        this.semester = semester;
-        this.faculty = faculty;
-       this.ScheCourse=student.StuCourse ;
+ 
+      this.stuORstaffCourse=student.StuCourse;
     }
-public Schedule(LocalDate day, LocalDate time,  Semester semester, Faculty faculty,Staff staff) {
+public Schedule(Staff staff) {
        super();
-    this.day = day;
-        this.time = time;
-        this.semester = semester;
-        this.faculty = faculty;
-       this.ScheCourse=staff.staffCourseArray ;
+    
+       this.stuORstaffCourse=staff.staffCourseArray ;
     }
 
 public LocalDate getDay() {
@@ -51,21 +45,41 @@ public ArrayList<Course> getCourse() {
 public void setCourse(Course course) {
    this.ScheCourse.add(course);
 }
-public Semester getSemester() {
-    return semester;
-}
-public void setSemester(Semester semester) {
-    this.semester = semester;
-}
-public Faculty getFaculty() {
-    return faculty;
-}
-public void setFaculty(Faculty faculty) {
-    this.faculty = faculty;
-}
+// public Semester getSemester() {
+//     return semester;
+// }
+// public void setSemester(Semester semester) {
+//     this.semester = semester;
+// }
+// public Faculty getFaculty() {
+//     return faculty;
+// }
+// public void setFaculty(Faculty faculty) {
+//     this.faculty = faculty;
+// }
 
 
+    
+   
+public boolean conflect(){
+    // CourseList.stream().reduce((e1,e2)->e1.getStart()!=null&&e2.getStart()!=null&& !e1.getStart().isAfter(e2.getStart().plusHours(1)) && !e1.getStart().plusHours(1).isBefore(e2.getStart()));
+    // return false;
+    
+    boolean noConflict = stuORstaffCourse.stream()
+    .allMatch(course1 ->
+            course1.getStart() != null &&
+                    stuORstaffCourse.stream()
+                            .filter(course2 -> course2.getStart() != null)
+                            .noneMatch(course2 ->
+                                    !course1.equals(course2) &&
+                                            !course1.getStart().isAfter(course2.getStart().plusHours(1)) &&
+                                            !course1.getStart().plusHours(1).isBefore(course2.getStart())
+                            )
+    );
 
+System.out.println(" time conflicts: " + !noConflict);
+return !noConflict;
+}
 
 
 
@@ -78,8 +92,8 @@ public String toString() {
     sb.append("Schedule{");
     sb.append("day=").append(day);
     sb.append(", time=").append(time);
-    sb.append(", semester=").append(semester);
-    sb.append(", faculty=").append(faculty);
+    // sb.append(", semester=").append(semester);
+    // sb.append(", faculty=").append(faculty);
     sb.append(", student=").append(student);
     sb.append(", courses=").append(ScheCourse);
     sb.append('}');
