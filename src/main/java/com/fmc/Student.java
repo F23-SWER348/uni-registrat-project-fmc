@@ -142,17 +142,45 @@ public class Student extends Grade {
 
     }
 
-    @Override
-    public String toString() {
+    public String StudentInfo() {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Student Name: ").append(name).append("\n");
-        stringBuilder.append("Student ID: ").append(id).append("\n");
-        stringBuilder.append("Contact: ").append(contact).append("\n");
-        stringBuilder.append("GPA: ").append(gpa).append("\n");
+        stringBuilder.append("Student Name: ").append(this.name).append("\n");
+        stringBuilder.append("Student ID: ").append(this.id).append("\n");
+        stringBuilder.append("Contact: ").append(this.contact).append("\n");
+        stringBuilder.append("GPA: ").append(this.GPA()).append("\n");
 
         return stringBuilder.toString();
     }
+
+    public void StudentTranscripts() {
+        Collection<Double> gradeStu = grade.values(); // طلت العلامات
+        Collection<Course> courseStu = grade.keySet(); // طلت الكورسات
+
+        final int[] totalCredits = { 0 };
+
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("Student Name: ").append(name).append("      ");
+        stringBuilder.append("Student ID: ").append(id).append("       ");
+        stringBuilder.append("Contact: ").append(contact).append("      ");
+        System.out.println(stringBuilder.toString());
+        System.out.println("name----Credits----grade----Mark estimation");
+        IntStream.range(0, Math.min(courseStu.size(), grade.size()))
+                .forEach(i -> {
+                    Course course = courseStu.stream().skip(i).findFirst().orElse(null);
+                    Double gradeValue = grade.values().stream().skip(i).findFirst().orElse(0.0);
+                    totalCredits[0] += course.getCredits();
+                    // return gradeValue * course.getCredits();
+                    System.out.println(course.getName() + "------" + gradeValue + "--------" + course.getCredits()
+                            + "---------" + course.gradeABC());
+
+                });
+
+        System.out.println("GPA: " + this.GPA());
+        System.out.println("Your evaluation :" + this.evaluation(GPA()) + "\n");
+
+    }
 }
+
 // static void sum(Object[] objects2 , Object[] objects){
 
 // if (objects2.length !=objects.length) {

@@ -48,6 +48,7 @@ public class Main {
         Student FatmaStu = new Student("fatma", 202109442, "fat@gmail");
         Student MaiStu = new Student("mai", 2021094423, "fat@gmail");
         Student CelinaStu = new Student("celina", 2021094423, "fat@gmail");
+
         math1.setStudent(CelinaStu);
         math2.setStudent(CelinaStu);
         math1.setStart(LocalTime.of(8, 0, 0));
@@ -66,10 +67,31 @@ public class Main {
         // لله بس كمان طبعت زيادة الطلاب الي بالمادة
         Grade Fgrade = new Grade(3.0, math1, FatmaStu);
         Grade Fgrade2 = new Grade(4.0, math2, FatmaStu);
-
+        System.out.println(FatmaStu.StudentInfo());
+        FatmaStu.StudentTranscripts();
         System.out.println(FatmaStu.GPA());
         System.out.println(FatmaStu.evaluation(3.0));
         System.out.println(FatmaStu.evaluation(FatmaStu.GPA()));
+        ////////////// فحص النواقص
 
+        // كورس ريجستريشن 1
+        // كلاس سكاجويلنج 0.5
+        // ادارة تسجيل الطلاب //ما بقدر احطها ب فاكلتي معينة
+        // تقرير عن كشف العلامات زي اخر كل فصل زي لما تطلع علاماتنا اخر الفصل
+        // نعمل نيو ستودينت و نيو فاكاتي
+        // نعمل اشي يجيب معلومات الستيودت الي هما الاسم معلومات التواصل الرول اذا هو
+        // ستيودنت ولا ستاف
+        // يسمح يعمل فصل جديد
+        // اليوم و البداية و النهاية و اكثر من موعد للكورس في == كيف يعمل نيو كورس عن
+        // طريق اسم الكورس وعدد الساعات و اي فاكلتي تابع ويحط موعدها الاسبوعي الها
+        // بقدر يسجل الطلاب ب الكلاس ،بس لازم يتأكد انو
+        // يدور على الكورسات المتاحة و يشوف المتطلبات و يسجل الطلاب ب الحصص بس لازم
+        // يتأكد انو الكرس ما بعتمد ع كورس مش مأخوذ
+        // مدير التسجيل يدخل علامات الطلاب بالكورسات تاعونهم
+        // يتابع الحالة الاكاديمية للطالب و يقدم تقرير
+        // لازم يطلعلي الجدول و يتأكد انو نا في تضارب اضا في يحكي
+        // لازم بعض من الكلاسات يكونوا ثريد سيف
+        // ولازم نشرح الجي بي ا على الباررل كومبيوت و ع كمان ميثود
+        // اعمل تيست ل 13 ميثود
     }
 }

@@ -74,6 +74,17 @@ public class Course extends user {// جربنا كل الميثود و نجحو�
         this.shortcut = shortcut;
     }
 
+    public String gradeABC() {
+
+        return this.getCredits() == 4 ? "A"
+                : this.getCredits() >= 3.5 ? "B+"
+                        : this.getCredits() >= 3 ? "B"
+                                : this.getCredits() <= 2.5 ? "C+"
+                                        : this.getCredits() >= 2 ? "C"
+                                                : this.getCredits() >= 1.5 ? "D+" : this.getCredits() >= 1 ? "D" : "I";
+
+    }
+
     public int getCredits() {
         return credits;
     }
