@@ -1,0 +1,22 @@
+[
+    {
+        "id": 1, 
+        "name": "Mai",
+        "gpa": 3.5,
+        "contact": "234234"
+    },
+    {
+        "id": 2, 
+        "name": "Celina",
+        "gpa": 3.5,
+        "contact": "456456"
+        
+    },
+    {
+        "id": 3, 
+        "name": "Fatma",
+        "gpa": 3.5,
+        "contact": "5464564"
+        
+    }
+]
