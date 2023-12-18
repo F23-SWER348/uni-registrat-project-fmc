@@ -15,7 +15,7 @@ import com.fmc.Staff;
 import com.fmc.Student;
 import com.fmc.user;
 
-public class main {
+public class Main {
 
     public static void main(String[] args) {
         int year = LocalDate.now().getYear();
