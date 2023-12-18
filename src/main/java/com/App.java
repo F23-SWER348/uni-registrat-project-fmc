@@ -14,10 +14,16 @@ import com.fmc.Semester;
 import com.fmc.Staff;
 import com.fmc.Student;
 import com.fmc.user;
+import com.parser.StudentReader;
 
 public class App {
 
     public static void main(String[] args) {
+
+
+        StudentReader sr = new StudentReader("assets\\data\\student.json");
+        sr.read();
+System.exit(0);
         int year = LocalDate.now().getYear();
         LocalDate start = LocalDate.of(2021, 1, 1);
         LocalDate end = LocalDate.of(2023, 1, 1);
