@@ -1,15 +1,17 @@
 package com.fmc;
 
+import java.util.ArrayList;
 
-
-public class Faculty  {
+public class Faculty extends user {
     
 
 private String name;
 private String contact;
+ArrayList<Course> facultyCourseArray=new ArrayList<>();/////////////
 
 
 public Faculty(String name,String contact) {
+    super();
     this.name = name;
     this.contact=contact;
     
@@ -37,7 +39,9 @@ public void setContact(String contact) {
     this.contact = contact;
 }
 
-
+public ArrayList<Course> getCourse() {
+   return facultyCourseArray;
+}
 
 
 
