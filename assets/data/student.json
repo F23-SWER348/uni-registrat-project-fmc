@@ -2,21 +2,26 @@
     {
         "id": 1, 
         "name": "Mai",
-        "gpa": 3.5,
-        "contact": "234234"
+        "contact": "234234",
+        "course": ["math","swerOS", "swer"],
+        "gread": ["3.5","2", "2.5"]
+
     },
     {
         "id": 2, 
         "name": "Celina",
-        "gpa": 3.5,
-        "contact": "456456"
-        
+        "contact": "456456",
+        "course": ["math","swerOS", "swer"],
+        "gread":  ["2.5","3", "1.5"]
+
     },
     {
         "id": 3, 
         "name": "Fatma",
-        "gpa": 3.5,
-        "contact": "5464564"
+        "contact": "5464564",
+        "course": ["math", "swer"],
+        "gread": ["3.5","1"]        
+
         
     }
 ]

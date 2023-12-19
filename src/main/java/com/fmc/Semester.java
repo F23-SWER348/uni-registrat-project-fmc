@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 public class Semester extends Course {
 
     ArrayList<Course> c = new ArrayList<>();// c يعني semesterCourseArray
-
+    private String name;
     private int year;
     private LocalDate start;
     private LocalDate end;
@@ -19,11 +19,21 @@ public class Semester extends Course {
     public Semester() {
     }
 
-    public Semester(int year, LocalDate start, LocalDate end) {
+    public Semester(String name,int year, LocalDate start, LocalDate end) {
         super();
         this.year = year;
         this.start = start;
         this.end = end;
+        this.name=name;
+    }
+
+    
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getYear() {
@@ -73,6 +83,11 @@ public class Semester extends Course {
         List<String> removes = this.c.stream().map(e -> e.getName().toLowerCase())
                 .filter(e -> e.equals(Namecourse.toLowerCase())).collect(Collectors.toList());
         this.c.remove(removes);// اتأكد اذا هي شغالةة
+    }
+
+    @Override
+    public String toString() {
+        return "Semester [c=" + c + ", name=" + name + ", year=" + year + ", start=" + start + ", end=" + end + "]";
     }
 
 }

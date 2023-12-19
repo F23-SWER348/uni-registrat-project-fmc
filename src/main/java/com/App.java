@@ -21,8 +21,20 @@ public class App {
     public static void main(String[] args) {
 
 
-        StudentReader sr = new StudentReader("assets\\data\\student.json");
-        sr.read();
+        StudentReader sr = new StudentReader("assets\\data\\student.json","assets\\data\\course.json","assets\\data\\Semester.json");
+           
+
+        sr.readSemester();
+         sr.readCourse(); 
+         System.out.println();         System.out.println();
+         System.out.println();
+         System.out.println();
+         System.out.println();
+System.out.println();         System.out.println();
+         System.out.println();
+         System.out.println();
+         System.out.println();
+            sr.read();
 System.exit(0);
         int year = LocalDate.now().getYear();
         LocalDate start = LocalDate.of(2021, 1, 1);
@@ -32,15 +44,14 @@ System.exit(0);
         Staff Mai = new Staff("Mai", "ghg@jjkh", 02115);
         Faculty science = new Faculty("science", "hjhj");///// مسحنا اريي الكورس منها
         Faculty science2 = new Faculty("science2", "hjhj");///// مسحنا اريي الكورس منها
-        Semester s2023 = new Semester(year, LocalDate.of(2021, 1, 1), LocalDate.of(2021, 1, 1));
-        Semester s2024 = new Semester(year, LocalDate.of(2021, 1, 1), LocalDate.of(2021, 1, 1));
+        Semester s2023 = new Semester("",year, LocalDate.of(2021, 1, 1), LocalDate.of(2021, 1, 1));
+        Semester s2024 = new Semester("",year, LocalDate.of(2021, 1, 1), LocalDate.of(2021, 1, 1));
         // Schedule FatmaSchedual=new Schedule(start, end, s2023, science, Fatma);
 
         Course math1 = new Course("Math1", "math131", 3, Fatma, s2024, science);
         Course math2 = new Course("Math2", "math132", 4, Fatma, s2024, science);
         // Course math3 = new Course("Math3", "math133", 33, Fatma,s2024, science);
         // Course math4 = new Course("Math4", "math134", 34, Mai,s2023, science2);
-        // Course math5 = new Course("Math5", "math135", 35, Mai,s2023, science2);
         // Course math6 = new Course("Math6", "math136", 36, Mai,s2023, science2);
         user user = new user();
         // Stream.of(science.getCourse()).forEach(e->System.out.print("The Science
