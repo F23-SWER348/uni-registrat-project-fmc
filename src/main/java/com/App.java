@@ -5,6 +5,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Stream;
 import com.fmc.Course;
 import com.fmc.Faculty;
@@ -21,27 +22,24 @@ public class App {
     public static void main(String[] args) {
 
 
-        StudentReader sr = new StudentReader("assets\\data\\student.json","assets\\data\\course.json","assets\\data\\Semester.json");
-           
+        StudentReader sr = new StudentReader("assets\\data\\student.json","assets\\data\\course.json","assets\\data\\Semester.json","assets\\data\\staff.json","assets\\data\\faculty.json");
+            sr.readFaculty();
+     ArrayList<Staff>staffs=  sr.readStaff();
+      ArrayList<Semester>semester= sr.readSemester();
+      ArrayList<Course>course= sr.readCourse(); 
+    
+      ArrayList<Student>student= sr.readStudent();
+      System.out.println("the courses that are taught by FQ");
+     Optional<Staff> f=staffs.stream().filter(e->e.getName().equals("FQ")).findFirst();
+System.out.println( f.get().getCourse());
 
-        sr.readSemester();
-         sr.readCourse(); 
-         System.out.println();         System.out.println();
-         System.out.println();
-         System.out.println();
-         System.out.println();
-System.out.println();         System.out.println();
-         System.out.println();
-         System.out.println();
-         System.out.println();
-            sr.read();
 System.exit(0);
         int year = LocalDate.now().getYear();
         LocalDate start = LocalDate.of(2021, 1, 1);
         LocalDate end = LocalDate.of(2023, 1, 1);
 
-        Staff Fatma = new Staff("fatma", "ghg@jjkh", 02115);
-        Staff Mai = new Staff("Mai", "ghg@jjkh", 02115);
+        Staff Fatma = new Staff("fatma", "ghg@jjkh","02115" );
+        Staff Mai = new Staff("Mai", "ghg@jjkh", "02115");
         Faculty science = new Faculty("science", "hjhj");///// مسحنا اريي الكورس منها
         Faculty science2 = new Faculty("science2", "hjhj");///// مسحنا اريي الكورس منها
         Semester s2023 = new Semester("",year, LocalDate.of(2021, 1, 1), LocalDate.of(2021, 1, 1));
@@ -82,6 +80,7 @@ System.exit(0);
         // e.toString() + "\n"));//نجحت الحمد الله هاي بتجيب طلاب المادة
         // FatmaStu.getCourse().stream().forEach(e->System.out.println(e));// زبطت الحمد
         // لله بس كمان طبعت زيادة الطلاب الي بالمادة
+     System.out.println(Fatma.getCourse());
         Grade Fgrade = new Grade(3.0, math1, FatmaStu);
         Grade Fgrade2 = new Grade(4.0, math2, FatmaStu);
         System.out.println(FatmaStu.StudentInfo());

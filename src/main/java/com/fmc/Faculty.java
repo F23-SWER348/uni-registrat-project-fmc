@@ -43,6 +43,11 @@ public ArrayList<Course> getCourse() {
    return facultyCourseArray;
 }
 
+@Override
+public String toString() {
+    return "Faculty [name=" + name + ", contact=" + contact + ", facultyCourseArray=" + getCourse() + "]";
+}
+
 
 
 

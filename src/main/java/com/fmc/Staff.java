@@ -7,9 +7,9 @@ public class Staff extends Student {
 
     private String name;
     private String email;
-    private long phoneNumber;
+    private String phoneNumber;
 
-    public Staff(String name, String email, long phoneNumber) {
+    public Staff(String name, String email, String phoneNumber) {
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
@@ -32,11 +32,11 @@ public class Staff extends Student {
         return email;
     }
 
-    public long getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(long phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
 
     }
@@ -77,6 +77,12 @@ public class Staff extends Student {
 
     public void addCourse(Course course1) {
         staffCourseArray.add(course1);
+    }
+
+    @Override
+    public String toString() {
+        return "Staff [staffCourseArray=" + this.getCourse() + ", name=" + name + ", email=" + email + ", phoneNumber="
+                + phoneNumber + "]";
     }
 
 }
