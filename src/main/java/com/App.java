@@ -33,12 +33,12 @@ public class App {
      Optional<Staff> f=staffs.stream().filter(e->e.getName().equals("FQ")).findFirst();
 System.out.println( f.get().getCourse());
 
-System.exit(0);
+//System.exit(0);
         int year = LocalDate.now().getYear();
         LocalDate start = LocalDate.of(2021, 1, 1);
         LocalDate end = LocalDate.of(2023, 1, 1);
 
-        Staff Fatma = new Staff("fatma", "ghg@jjkh","02115" );
+       Staff Fatma = new Staff("fatma", "ghg@jjkh","02115" );
         Staff Mai = new Staff("Mai", "ghg@jjkh", "02115");
         Faculty science = new Faculty("science", "hjhj");///// مسحنا اريي الكورس منها
         Faculty science2 = new Faculty("science2", "hjhj");///// مسحنا اريي الكورس منها
@@ -73,18 +73,18 @@ System.exit(0);
         Schedule celinaSchedule = new Schedule(CelinaStu);
         celinaSchedule.conflect();// نجحت والرب يبارك الجميع هيدي قوة التركيز
         // System.out.println(FatmaSchedual.toString());//ما نجحت
-        // math1.removeStudent(202109442);// الحمد لله نجاح باهر
+      //  math1.removeStudent(202109442);// الحمد لله نجاح باهر
         // Stream.of(math1.getStudent()).forEach(e->System.out.print("The Science
         // Courses : 1"+e.toString()+"\n" )); // التجربة الاولى غلط
         // math1.getStudent().forEach(e -> System.out.print("The Science Courses : 1" +
         // e.toString() + "\n"));//نجحت الحمد الله هاي بتجيب طلاب المادة
-        // FatmaStu.getCourse().stream().forEach(e->System.out.println(e));// زبطت الحمد
+        FatmaStu.getCourse().stream().forEach(e->System.out.println(e));// زبطت الحمد
         // لله بس كمان طبعت زيادة الطلاب الي بالمادة
      System.out.println(Fatma.getCourse());
         Grade Fgrade = new Grade(3.0, math1, FatmaStu);
         Grade Fgrade2 = new Grade(4.0, math2, FatmaStu);
         System.out.println(FatmaStu.StudentInfo());
-        FatmaStu.StudentTranscripts();
+      System.out.println(FatmaStu.StudentTranscripts());
         System.out.println(FatmaStu.GPA());
         System.out.println(FatmaStu.evaluation(3.0));
         System.out.println(FatmaStu.evaluation(FatmaStu.GPA()));
