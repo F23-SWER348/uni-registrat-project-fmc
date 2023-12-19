@@ -27,20 +27,21 @@ public class Student extends Grade {
     // this.gpa = gpa;
     // }
 
-    public Student(String name, int id, String contact, double gpa) {
-        super();
-        this.name = name;
-        this.id = id;
-        this.contact = contact;
-        this.gpa = gpa;
-
-    }
+   
 
     public Student(String name, int id, String contact) {
         this.name = name;
         this.id = id;
         this.contact = contact;
     }
+    //'طالب جديد جاي من جامعة ثانية '
+    //  public void preStudent(String name, int id, String contact, double gpa) {
+    //     this.name = name;
+    //     this.id = id;
+    //     this.contact = contact;
+    //     this.gpa = gpa;
+
+    // }
 
     public List<Course> getCourse() {
         return this.StuCourse;

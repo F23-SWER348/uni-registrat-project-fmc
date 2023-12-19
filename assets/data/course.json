@@ -1,0 +1,38 @@
+[
+    {
+        "name": "math", 
+        "shortcut": "math1",
+        "credits": 4,
+        "staff":"MB",
+        "semester":"fall2023",
+        "faculty":"science"
+        
+    },
+    {
+        "name": "swer", 
+        "shortcut": "swer1",
+        "credits": 3,
+        "staff":"FQ",
+        "semester":"fall2023",
+        "faculty":"science"
+        
+    },
+    {
+        "name": "history", 
+        "shortcut": "hist1",
+        "credits": 3,
+        "staff":"JG",
+        "semester":"spring2023",
+        "faculty":"Art"
+        
+    },
+    {
+        "name": "swerOS", 
+        "shortcut": "swer2",
+        "credits": 3,
+        "staff":"FQ",
+        "semester":"fall2023",
+        "faculty":"science"
+        
+    }
+]

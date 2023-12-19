@@ -9,13 +9,13 @@ public class StudentTest {
 
     Student student;
 
-    @Before
-    public void setup(){
-        student = new Student("Mai", 1, "059234234234", 3.5);
-    }
+    // @Before
+    // public void setup(){
+    //     // student = new Student("Mai", 1, "059234234234", 3.5);
+    // }
 
-    @Test
-    public void GPA_TEST() {
-        assertEquals(  3.5, (double)student.GPA(), 0);
-    }
+    // @Test
+    // public void GPA_TEST() {
+    //     assertEquals(  3.5, (double)student.GPA(), 0);
+    // }
 }
