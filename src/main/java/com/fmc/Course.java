@@ -12,6 +12,7 @@ public class Course extends user {// جربنا كل الميثود و نجحو�
     private String shortcut;
     private int credits;
     private Staff staff;
+        private Faculty faculty;
     private Semester semester;
     LocalTime start;
     LocalTime end;
@@ -40,6 +41,8 @@ public class Course extends user {// جربنا كل الميثود و نجحو�
         semester.c.add(this);
         user.semesterCourse.put(semester, semester.c);
         // this.studentCourse.put(this, studentCourseArray);//موقعها غلط
+       
+
         faculty.facultyCourseArray.add(this);
         user.FacultyCourse.put(faculty, faculty.facultyCourseArray);
     }
@@ -52,6 +55,9 @@ public class Course extends user {// جربنا كل الميثود و نجحو�
         this.semester = semester;
         semester.c.add(this);
         user.semesterCourse.put(semester, semester.c);
+        faculty.facultyCourseArray.add(this);
+      user.FacultyCourse.put(faculty, faculty.facultyCourseArray);
+
         staff.staffCourseArray.add(this);
         user.staffCourse.put(staff, staff.staffCourseArray);
         // this.studentCourse.put(this, studentCourseArray);//موقعها غلط
@@ -60,6 +66,15 @@ public class Course extends user {// جربنا كل الميثود و نجحو�
 
     public String getName() {
         return name;
+    }
+    
+
+    public Faculty getFaculty() {
+        return faculty;
+    }
+
+    public void setFaculty(Faculty faculty) {
+        this.faculty = faculty;
     }
 
     public void setName(String name) {
@@ -165,10 +180,10 @@ public class Course extends user {// جربنا كل الميثود و نجحو�
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Course Name: ").append(name).append("\n");
-        stringBuilder.append("Shortcut: ").append(shortcut).append("\n");
-        stringBuilder.append("Credits: ").append(credits).append("\n");
-        stringBuilder.append("Staff: ").append(staff.getName()).append("\n");
+        stringBuilder.append("Course Name: ").append(name).append("---");
+        stringBuilder.append("Shortcut: ").append(shortcut).append("---");
+        stringBuilder.append("Credits: ").append(credits).append("---");
+        stringBuilder.append("Staff: ").append(staff.getName()).append("---");
         stringBuilder.append("Semester: ").append(semester.getYear()).append("\n");
 
         return stringBuilder.toString();
