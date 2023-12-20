@@ -1,45 +1,40 @@
 package com.fmc;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class Schedule extends Student {
 
     ArrayList<Course> ScheCourse = new ArrayList<>();;
 
-    private LocalDate day;
-    private LocalDate time;
+    // private LocalDate time;
     ArrayList<Course> stuORstaffCourse;
     Student student;
-
+Staff staff;
     // الاريي تاعت كورسات الستيودنت راح نقرأها من فايل
     public Schedule(Student student) {
         super();
-
+this.student=student;
         this.stuORstaffCourse = student.StuCourse;
     }
 
     public Schedule(Staff staff) {
         super();
-
+this.staff=staff;
         this.stuORstaffCourse = staff.staffCourseArray;
     }
 
-    public LocalDate getDay() {
-        return day;
-    }
 
-    public void setDay(LocalDate day) {
-        this.day = day;
-    }
 
-    public LocalDate getTime() {
-        return time;
-    }
+    // public LocalDate getTime() {
+    //     return time;
+    // }
 
-    public void setTime(LocalDate time) {
-        this.time = time;
-    }
+    // public void setTime(LocalDate time) {
+    //     this.time = time;
+    // }
 
     public ArrayList<Course> getCourse() {
         return ScheCourse;
@@ -72,25 +67,28 @@ public class Schedule extends Student {
                         stuORstaffCourse.stream()
                                 .filter(course2 -> course2.getStart() != null)
                                 .noneMatch(course2 -> !course1.equals(course2) &&
-                                        !course1.getStart().isAfter(course2.getStart().plusHours(1)) &&
-                                        !course1.getStart().plusHours(1).isBefore(course2.getStart())));
+                                        !course1.getStart().isAfter(course2.getEnd()) &&
+                                        !course1.getEnd().isBefore(course2.getStart())&&course1.getDay()==course2.getDay()));
 
-        System.out.println(" time conflicts: " + !noConflict);
+       
         return !noConflict;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Schedule{");
-        sb.append("day=").append(day);
-        sb.append(", time=").append(time);
+        sb.append("Schedule").append("  student Name =").append(student.getName()+"    id :"+student.getId()+"\n");
+        stuORstaffCourse.stream().forEach(e->  sb.append(", courses=").append(e.getName()+","+e.getShortcut()+"   ").append("day=").append(e.getDay()).append(", time=").append(e.getStart()).append(" to "+e.getEnd()+"\n"));
+        // Optional.ofNullable(stuORstaffCourse)
+        // .ifPresent(courses -> courses.forEach(e -> {e->  sb.append(", courses=").append(e).append("day=").append(e.day).append(", time=").append(e.getStart()).append("to "+e.getEnd()))}));
+
+      
         // sb.append(", semester=").append(semester);
         // sb.append(", faculty=").append(faculty);
-        sb.append(", student=").append(student);
-        sb.append(", courses=").append(ScheCourse);
-        sb.append('}');
-        return sb.toString();
+
+              // sb.append('}');
+         
+        return sb.append("schedule have a conflect ? "+this.conflect()+"\n").toString();
     }
 
 }

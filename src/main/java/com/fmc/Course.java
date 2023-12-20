@@ -1,5 +1,7 @@
 package com.fmc;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
@@ -16,13 +18,13 @@ public class Course extends user {// جربنا كل الميثود و نجحو�
     private Semester semester;
     LocalTime start;
     LocalTime end;
-
+DayOfWeek day ;
     // private LocalDate day; مش كثير مفهومة
     // protected Map<Course, ArrayList<Student> > studentCourse = new HashMap<>();
     // //طلاب الكورس
 
     // ArrayList =new ArrayList<>();
-    BlockingQueue<Student> studentCourseArray = new LinkedBlockingQueue<>(30);
+    public BlockingQueue<Student> studentCourseArray = new LinkedBlockingQueue<>(30);
 
     public Course() {
         CourseList.add(this);
@@ -117,12 +119,21 @@ public class Course extends user {// جربنا كل الميثود و نجحو�
     }
 
     public LocalTime getEnd() {
-        return end;
+        return end=start.plusHours(1);
     }
 
-    public void setEnd(LocalTime end) {
-        this.end = end;
+    public void setEnd(int end) {
+        this.end=start.plusHours(end);
     }
+    public DayOfWeek getDay() {
+        return day;
+    }
+
+    public void setDay(String Day) {
+      
+      day=DayOfWeek.valueOf(Day.toUpperCase());
+    }
+
 
     public Semester getSemester() {
         return semester;
@@ -133,15 +144,16 @@ public class Course extends user {// جربنا كل الميثود و نجحو�
     }
 
     public BlockingQueue<Student> getStudent() {///////////
+
         return studentCourseArray;
     }
 
     public void setStudent(Student student) {
 
         try {
-            studentCourseArray.put(student);
+            studentCourseArray.offer(student);
             student.addCourse(this);
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         } // السعة تم حلها ب بلوكنج كيو
     }
@@ -154,7 +166,7 @@ public class Course extends user {// جربنا كل الميثود و نجحو�
         // this.studentCourseArray.take(student);//السعة
         List<Student> stu = studentCourseArray.stream().filter(e -> e.getId() == studentId)
                 .collect(Collectors.toList());
-        stu.stream().map(e -> e.StuCourse.remove(e));
+        stu.stream().map(e -> e.getCourse().remove(e));
         this.studentCourseArray.removeIf(s -> s.getId() == studentId);
 
         // student.course.remove(stu);
@@ -183,8 +195,8 @@ public class Course extends user {// جربنا كل الميثود و نجحو�
         stringBuilder.append("Course Name: ").append(name).append("---");
         stringBuilder.append("Shortcut: ").append(shortcut).append("---");
         stringBuilder.append("Credits: ").append(credits).append("---");
-        stringBuilder.append("Staff: ").append(staff.getName()).append("---");
-        stringBuilder.append("Semester: ").append(semester.getYear()).append("\n");
+        // stringBuilder.append("Staff: ").append(staff.getName()).append("---");
+        // stringBuilder.append("Semester: ").append(semester.getYear()).append("\n");
 
         return stringBuilder.toString();
     }
