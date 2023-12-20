@@ -5,7 +5,13 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.RecursiveTask;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import com.fmc.Student.AssTask;
 
 public class Student extends Grade {
 
@@ -27,19 +33,17 @@ public class Student extends Grade {
     // this.gpa = gpa;
     // }
 
-   
-
     public Student(String name, int id, String contact) {
         this.name = name;
         this.id = id;
         this.contact = contact;
     }
-    //'طالب جديد جاي من جامعة ثانية '
-    //  public void preStudent(String name, int id, String contact, double gpa) {
-    //     this.name = name;
-    //     this.id = id;
-    //     this.contact = contact;
-    //     this.gpa = gpa;
+    // 'طالب جديد جاي من جامعة ثانية '
+    // public void preStudent(String name, int id, String contact, double gpa) {
+    // this.name = name;
+    // this.id = id;
+    // this.contact = contact;
+    // this.gpa = gpa;
 
     // }
 
@@ -80,9 +84,9 @@ public class Student extends Grade {
     }
 
     public void addCourse(Course course1) {
-      
+
         StuCourse.add(course1);
-    
+
     }
     // // جبت الماب الي جواها الكورس و ارري الطلاب الي فيه
     // public List<Course> getCourse() {
@@ -111,8 +115,8 @@ public class Student extends Grade {
     }
 
     public Double GPA() {
-        Collection<Double> gradeStu = grade.values(); // طلت العلامات
-        Collection<Course> courseStu = grade.keySet(); // طلت الكورسات
+        List<Double> gradeStu = grade.values().stream().collect(Collectors.toList()); // طلت العلامات
+        List<Course> courseStu = grade.keySet().stream().collect(Collectors.toList()); // طلت الكورسات
 
         // حسبت مجموع (علامة × عدد الساعات)
         final int[] totalCredits = { 0 };
@@ -124,11 +128,14 @@ public class Student extends Grade {
                     totalCredits[0] += course.getCredits();
                     return gradeValue * course.getCredits();
                 }).sum();
-        // System.out.println("Total Credits: " + totalCredits[0]);
-        // System.out.println("GPA: " + gpa);
-        this.gpa = weightedPoints / totalCredits[0];
-        return weightedPoints / totalCredits[0];
 
+        RecursiveTask rAction=new AssTask(gradeStu,courseStu,0,gradeStu.size());
+          ForkJoinPool pool=new ForkJoinPool();
+          double result = (double) pool.invoke(rAction);
+    //     this.gpa = weightedPoints / totalCredits[0];
+    //    weightedPoints / totalCredits[0];
+ 
+ return  result/ totalCredits[0];
     }
 
     public String evaluation(Double GPA) {
@@ -144,7 +151,7 @@ public class Student extends Grade {
         return GPA == 4 ? "Heighest Honor" : GPA >= 3.5 ? "Deans" : GPA >= 3 ? "Honor" : GPA <= 1.5 ? "Probation" : "";
 
     }
-   
+
     public String StudentInfo() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Student Name: ").append(this.name).append("\n");
@@ -164,7 +171,7 @@ public class Student extends Grade {
         stringBuilder.append("Student Name: ").append(name).append("      ");
         stringBuilder.append("Student ID: ").append(id).append("       ");
         stringBuilder.append("Contact: ").append(contact).append("      ");
-         stringBuilder.append(  "\n"+"name----Credits----grade----Mark estimation" + "\n");
+        stringBuilder.append("\n" + "name----Credits----grade----Mark estimation" + "\n");
         IntStream.range(0, Math.min(courseStu.size(), grade.size()))
                 .forEach(i -> {
                     Course course = courseStu.stream().skip(i).findFirst().orElse(null);
@@ -175,49 +182,42 @@ public class Student extends Grade {
                             + "---------" + course.gradeABC() + "\n");
 
                 });
+                
 
-         stringBuilder.append("GPA: " + this.GPA());
+        stringBuilder.append("GPA: " + this.GPA());
         stringBuilder.append("Your evaluation :" + this.evaluation(GPA()) + "\n");
         return stringBuilder;
 
     }
-}
+public class AssTask extends RecursiveTask<Double> {
+    List<Double> arr;
+    List<Course> courseStu;
+    int low;
+    int high;
+    int capacity = 1000;
 
-// static void sum(Object[] objects2 , Object[] objects){
+    public AssTask(List<Double> gradeStu,List<Course> courseStu, int low, int high) {
+        this.arr = gradeStu;
+        this.low = low;
+        this.high = high;
+        this.courseStu=courseStu;
+    }
 
-// if (objects2.length !=objects.length) {
-// throw new IllegalArgumentException("Matrix dimensions do not match");
-// }
-// ForkJoinPool pool=new ForkJoinPool();
-// pool.invoke(new RecursiveActionclass(objects2, objects, 0, objects2.length));
-// }
-// }
-
-// class RecursiveActionclass extends RecursiveAction {
-
-// Object[] objects2;
-// Object[] objects;
-// int startRow;
-// int endRow;
-
-// public RecursiveActionclass(Course[] objects2,Double[] objects, int startRow,
-// int endRow) {
-// this.objects = objects2;
-// this.objects2 = objects;
-// this.startRow = startRow;
-// this.endRow = endRow;}
-// double c=0.0;//sum
-// @Override
-// protected void compute() {
-// if(endRow-startRow<=1){
-// c = (double)(((Course) objects2[startRow]).getCredits())* objects[startRow];
-// }
-
-// int midRow=(endRow+startRow)/2;
-
-// RecursiveActionclass left =new RecursiveActionclass(a, b, startRow, midRow);
-// RecursiveActionclass right =new RecursiveActionclass(a, b, midRow, endRow);
-
-// invokeAll(left,right);
-// }
-// }
+    @Override
+    protected Double compute() {
+        if (high - low < 1000) {
+            double sum = 0;
+            for (int i = low; i < high; i++) {
+                // sum+=arr[i];
+                sum += arr.get(i).doubleValue()*courseStu.get(i).getCredits();
+            }
+            return sum;
+        } else {
+            int mid = (high + low) / 2;
+            AssTask left = new AssTask(arr,courseStu, low, mid);
+            AssTask right = new AssTask(arr,courseStu, mid, high);
+            left.fork();
+            right.fork();
+            return left.join() + right.join();
+        }
+    }}}

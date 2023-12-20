@@ -102,7 +102,9 @@ System.out.println("Staff Mai courses :"+Mai.getCourse().toString());
         System.out.println("Staff Mai info :"+Mai.toString());
                 System.out.println("Faculty  science info :"+science.toString());
               System.out.println("0000000000000000000");
-               user.AvaliableCourses().stream().forEach(e->System.out.println(e.toString()) );//ما زبطت 
+               user.CourseList.stream().forEach(e->System.out.println("1"+e.toString()));
+              System.out.println(user.AvaliableCourses());
+             //  user.AvaliableCourses().stream().forEach(e->System.out.println(e.toString()) );//ما زبطت 
         ////////////// فحص النواقص
 
         // كورس ريجستريشن 1
@@ -122,7 +124,7 @@ System.out.println("Staff Mai courses :"+Mai.getCourse().toString());
         // 1يتابع الحالة الاكاديمية للطالب و يقدم تقرير
         // 1لازم يطلعلي الجدول و يتأكد انو نا في تضارب اضا في يحكي
         // 0لازم بعض من الكلاسات يكونوا ثريد سيف
-        // 0ولازم نشرح الجي بي ا على الباررل كومبيوت و ع كمان ميثود
+        // 1ولازم نشرح الجي بي ا على الباررل كومبيوت و ع كمان ميثود
         // 0.5اعمل تيست ل 13 ميثود
     }
 }

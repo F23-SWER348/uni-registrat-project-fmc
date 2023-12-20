@@ -13,7 +13,7 @@ public class user {
      static Map<Staff, ArrayList<Course> > staffCourse = new HashMap<>();
     static Map<Student, ArrayList<Course> > courseStudent = new HashMap<>(); //كورسات الطالب 
    static  Map<Faculty, ArrayList<Course> > FacultyCourse = new HashMap<>();
-   ArrayList<Course> CourseList=new ArrayList<>();;
+   public ArrayList<Course> CourseList=new ArrayList<>();;
 
    public static Map<Semester, ArrayList<Course>> getSemesterCourse() {
     return semesterCourse;
@@ -31,12 +31,11 @@ public static Map<Faculty, ArrayList<Course>> getFacultyCourse() {
     return FacultyCourse;
 }
 
-public List<Course> AvaliableCourses() {
-    List<Course> availableCourses = CourseList.stream()
-            .filter(e -> e.getStudent().size()<=29)
-            .collect(Collectors.toList());
-
-    return availableCourses;
-}
+public String AvaliableCourses() {
+    System.out.println(CourseList.toString());
+   CourseList.stream()
+            .filter(e -> e.getStudent().size()<=29).forEach(e->System.out.println(e.toString()));
+            
+    return "";}
 
 }
