@@ -80,7 +80,9 @@ public class Student extends Grade {
     }
 
     public void addCourse(Course course1) {
+      
         StuCourse.add(course1);
+    
     }
     // // جبت الماب الي جواها الكورس و ارري الطلاب الي فيه
     // public List<Course> getCourse() {
@@ -142,7 +144,7 @@ public class Student extends Grade {
         return GPA == 4 ? "Heighest Honor" : GPA >= 3.5 ? "Deans" : GPA >= 3 ? "Honor" : GPA <= 1.5 ? "Probation" : "";
 
     }
-
+   
     public String StudentInfo() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Student Name: ").append(this.name).append("\n");

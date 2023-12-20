@@ -10,6 +10,7 @@ import org.junit.Test;
 
 public class StudentTest {
     Student CelinaStu = new Student("celina", 2021094423, "fat@gmail");
+    Student MaiStu = new Student("mai", 2021094423, "fat@gmail");
 
           Student FatmaStu = new Student("fatma", 202109442, "fat@gmail");  
            
@@ -17,7 +18,7 @@ public class StudentTest {
         Faculty science = new Faculty("science", "hjhj");
          Semester s2024 = new Semester("",2023, LocalDate.of(2021, 1, 1), LocalDate.of(2021, 1, 1));
         Course math1 = new Course("Math1", "math131", 3, MB, s2024, science);
-        Course math2 = new Course("Math2", "math132", 4, MB, s2024, science);
+        Course math2 = new Course("Math2", "math132", 4, MB, s2024, science ,math1);
    
             Grade Fgrade = new Grade(3.0, math1, FatmaStu);
         Grade Fgrade2 = new Grade(4.0, math2, FatmaStu);  
@@ -31,7 +32,7 @@ public class StudentTest {
            math2.setStudent(CelinaStu);
                    math2.setStart(LocalTime.of(7, 30, 0));
                    math1.setStart(LocalTime.of(8, 0, 0));
-
+                   math2.setStudent(MaiStu);
 
  }
 
@@ -78,4 +79,11 @@ public class StudentTest {
       public void getCourseStaff() {
  assertEquals(true,MB.getCourse().contains(math1)&&MB.getCourse().contains(math2));
      }
+
+// Dear "+student.getName()+" Done  math2.setStudent(MaiStu)
+ @Test
+      public void depended() {
+ assertEquals("Dear mai you must take this course Course Name: Math1---Shortcut: math131---Credits: 3---",math2.setStudent(MaiStu));
+     }
+
 }

@@ -40,15 +40,17 @@ System.out.println( f.get().getCourse());
         LocalDate DsetDay = LocalDate.of(2021, 1, 1);
         LocalDate end = LocalDate.of(2023, 1, 1);
 
-       Staff Fatma = new Staff("fatma", "ghg@jjkh","02115" );
+       Staff Fatma = new Staff("fatma", "Fatma@jjkh","02115" );
         Staff Mai = new Staff("Mai", "ghg@jjkh", "02115");
         Faculty science = new Faculty("science", "hjhj");
         Faculty science2 = new Faculty("science2", "hjhj");
         Semester s2023 = new Semester("",year, LocalDate.of(2021, 1, 1), LocalDate.of(2021, 1, 1));
         Semester s2024 = new Semester("",year, LocalDate.of(2021, 1, 1), LocalDate.of(2021, 1, 1));
-        Schedule FatmaSchedual=new Schedule(Fatma);
+       
+                Schedule MaiSchedula=new Schedule(Mai);
+ Schedule FatmaSchedula=new Schedule(Fatma);
         Course math1 = new Course("Math1", "math131", 3, Fatma, s2024, science);
-        Course math2 = new Course("Math2", "math132", 4, Fatma, s2024, science);
+        Course math2 = new Course("Math2", "math132", 4, Fatma, s2024, science,math1);
         Course math4 = new Course("Math4", "math134", 34, Mai,s2023, science2);
         Course math6 = new Course("Math6", "math136", 36, Mai,s2023, science2);
         user user = new user();
@@ -60,21 +62,25 @@ System.out.println( f.get().getCourse());
         Student FatmaStu = new Student("fatma", 202109442, "fat@gmail");
         Student MaiStu = new Student("mai", 2021094423, "fat@gmail");
         Student CelinaStu = new Student("celina", 2021094423, "fat@gmail");
-
-        math1.setStudent(CelinaStu);
-        math2.setStudent(CelinaStu);
+System.out.println("We will add students to the course if the student has taken the previous required courses");//يضيف الطالب للكورس اذا اخد الكورسات المعتمدة على هاد الكورس
+      System.out.println(  math1.setStudent(CelinaStu));
+       System.out.println(     math2.setStudent(CelinaStu));
         math1.setStart(LocalTime.of(8, 0, 0));
-        math2.setStudent(FatmaStu);
-        math1.setStudent(FatmaStu);
-        math2.setStudent(MaiStu);
-        math1.setStudent(MaiStu);
+          System.out.println(  math1.setStudent(FatmaStu));
+          System.out.println(  math2.setStudent(FatmaStu));
+          System.out.println(  math2.setStudent(MaiStu));
+        
         math2.setStart(LocalTime.of(8, 30, 0));
         math2.setDay("monday");
         math1.setDay("monday");
+            math2.setDay("monday");
+        math1.setDay("monday");
+          math4.setStart(LocalTime.of(8, 0, 0));
+            math6.setStart(LocalTime.of(9, 1, 0));
         System.out.println("to test if celina schedule have a conflect ?");
         Schedule celinaSchedule = new Schedule(CelinaStu);
         System.out.println(" time conflicts: " + celinaSchedule.conflect());// نجحت
-        System.out.println("celina Schedule :\n"+celinaSchedule.toString());// نجحت
+        System.out.println("celina Schedule :\n"+celinaSchedule.toStringStu());// نجحت
          math1.removeStudent(202109442);// نجحت   
            System.out.println("math1 students");  
            math1.getStudent().stream().forEach(e->System.out.println( e.getName()));//نجحت
@@ -82,7 +88,8 @@ System.out.println( f.get().getCourse());
         System.out.println("Mai courses :");
         MaiStu.getCourse().stream().forEach(e->System.out.println(e));//نجحت
        
-      
+        System.out.println("staff Mai Schedule :\n"+MaiSchedula.toStringStaff());// نجحت
+System.out.println("Staff Mai courses :"+Mai.getCourse().toString());
       
 
         Grade Fgrade = new Grade(3.0, math1, FatmaStu);
@@ -92,26 +99,30 @@ System.out.println( f.get().getCourse());
         System.out.println("Student Fatma GPA \n"+FatmaStu.GPA());
         System.out.println("evaluation test \n"+FatmaStu.evaluation(3.0));
         System.out.println("Student Fatma evaluation \n" + FatmaStu.evaluation(FatmaStu.GPA()));
+        System.out.println("Staff Mai info :"+Mai.toString());
+                System.out.println("Faculty  science info :"+science.toString());
+              System.out.println("0000000000000000000");
+               user.AvaliableCourses().stream().forEach(e->System.out.println(e.toString()) );//ما زبطت 
         ////////////// فحص النواقص
 
         // كورس ريجستريشن 1
-        // كلاس سكاجويلنج 0.5
-        // ادارة تسجيل الطلاب //ما بقدر احطها ب فاكلتي معينة
-        // تقرير عن كشف العلامات زي اخر كل فصل زي لما تطلع علاماتنا اخر الفصل
-        // نعمل نيو ستودينت و نيو فاكاتي
-        // نعمل اشي يجيب معلومات الستيودت الي هما الاسم معلومات التواصل الرول اذا هو
-        // ستيودنت ولا ستاف
-        // يسمح يعمل فصل جديد
-        // اليوم و البداية و النهاية و اكثر من موعد للكورس في == كيف يعمل نيو كورس عن
-        // طريق اسم الكورس وعدد الساعات و اي فاكلتي تابع ويحط موعدها الاسبوعي الها
-        // بقدر يسجل الطلاب ب الكلاس ،بس لازم يتأكد انو
-        // يدور على الكورسات المتاحة و يشوف المتطلبات و يسجل الطلاب ب الحصص بس لازم
-        // يتأكد انو الكرس ما بعتمد ع كورس مش مأخوذ
-        // مدير التسجيل يدخل علامات الطلاب بالكورسات تاعونهم
-        // يتابع الحالة الاكاديمية للطالب و يقدم تقرير
-        // لازم يطلعلي الجدول و يتأكد انو نا في تضارب اضا في يحكي
-        // لازم بعض من الكلاسات يكونوا ثريد سيف
-        // ولازم نشرح الجي بي ا على الباررل كومبيوت و ع كمان ميثود
-        // اعمل تيست ل 13 ميثود
+        // كلاس سكاجويلنج1
+        // 0ادارة تسجيل الطلاب //ما بقدر احطها ب فاكلتي معينة
+        // 1تقرير عن كشف العلامات زي اخر كل فصل زي لما تطلع علاماتنا اخر الفصل
+        //1 نعمل نيو ستودينت و نيو فاكاتي
+        // 1نعمل اشي يجيب معلومات الستيودت الي هما الاسم معلومات التواصل الرول اذا هو
+        //1 ستيودنت ولا ستاف
+        // 1يسمح يعمل فصل جديد
+        //1 اليوم و البداية و النهاية و اكثر من موعد للكورس في == كيف يعمل نيو كورس عن
+        // 1طريق اسم الكورس وعدد الساعات و اي فاكلتي تابع ويحط موعدها الاسبوعي الها
+        // 1بقدر يسجل الطلاب ب الكلاس ،بس لازم يتأكد انو
+        // 0يدور على الكورسات المتاحة و يشوف المتطلبات و يسجل الطلاب ب الحصص بس لازم
+        // 0يتأكد انو الكرس ما بعتمد ع كورس مش مأخوذ
+        //1 مدير التسجيل يدخل علامات الطلاب بالكورسات تاعونهم
+        // 1يتابع الحالة الاكاديمية للطالب و يقدم تقرير
+        // 1لازم يطلعلي الجدول و يتأكد انو نا في تضارب اضا في يحكي
+        // 0لازم بعض من الكلاسات يكونوا ثريد سيف
+        // 0ولازم نشرح الجي بي ا على الباررل كومبيوت و ع كمان ميثود
+        // 0.5اعمل تيست ل 13 ميثود
     }
 }
