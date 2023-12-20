@@ -2,7 +2,9 @@ package com.fmc;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class user {
     //مش حاس اله فايدة هاد الكلاس
@@ -28,4 +30,13 @@ public static Map<Student, ArrayList<Course>> getCourseStudent() {
 public static Map<Faculty, ArrayList<Course>> getFacultyCourse() {
     return FacultyCourse;
 }
+
+public List<Course> AvaliableCourses() {
+    List<Course> availableCourses = CourseList.stream()
+            .filter(e -> e.getStudent().size()<=29)
+            .collect(Collectors.toList());
+
+    return availableCourses;
+}
+
 }

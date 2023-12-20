@@ -81,8 +81,8 @@ public class Staff extends Student {
 
     @Override
     public String toString() {
-        return "Staff [staffCourseArray=" + this.getCourse() + ", name=" + name + ", email=" + email + ", phoneNumber="
-                + phoneNumber + "]";
+        return "  name=" + name + ", email=" + email + ", phoneNumber="
+                + phoneNumber +" \n staffCourse" + this.getCourse()  ;
     }
 
 }

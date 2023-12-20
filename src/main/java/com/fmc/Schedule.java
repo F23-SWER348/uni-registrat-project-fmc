@@ -74,9 +74,11 @@ this.staff=staff;
         return !noConflict;
     }
 
-    @Override
-    public String toString() {
+    
+    public String toStringStu() {
+        try{
         StringBuilder sb = new StringBuilder();
+        
         sb.append("Schedule").append("  student Name =").append(student.getName()+"    id :"+student.getId()+"\n");
         stuORstaffCourse.stream().forEach(e->  sb.append(", courses=").append(e.getName()+","+e.getShortcut()+"   ").append("day=").append(e.getDay()).append(", time=").append(e.getStart()).append(" to "+e.getEnd()+"\n"));
         // Optional.ofNullable(stuORstaffCourse)
@@ -89,6 +91,27 @@ this.staff=staff;
               // sb.append('}');
          
         return sb.append("schedule have a conflect ? "+this.conflect()+"\n").toString();
+    }catch(Exception s){return"enter the time of each course ";}
     }
+     
+    public String toStringStaff() {
+        try{
+        StringBuilder sb = new StringBuilder();
+        
+        sb.append("Schedule").append("  Staff Name =").append(staff.getName()+"    Email :"+staff.getEmail()+"\n");
+        stuORstaffCourse.stream().forEach(e->  sb.append(", courses=").append(e.getName()+","+e.getShortcut()+"   ").append("day=").append(e.getDay()).append(", time=").append(e.getStart()).append(" to "+e.getEnd()+"\n"));
+        // Optional.ofNullable(stuORstaffCourse)
+        // .ifPresent(courses -> courses.forEach(e -> {e->  sb.append(", courses=").append(e).append("day=").append(e.day).append(", time=").append(e.getStart()).append("to "+e.getEnd()))}));
+
+      
+        // sb.append(", semester=").append(semester);
+        // sb.append(", faculty=").append(faculty);
+
+              // sb.append('}');
+         
+        return sb.append("schedule have a conflect ? "+this.conflect()+"\n").toString();}
+        catch(Exception s){return"enter the time of each course ";}
+    }
+
 
 }

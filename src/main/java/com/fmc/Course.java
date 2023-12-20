@@ -4,6 +4,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.stream.Collectors;
@@ -19,6 +20,7 @@ public class Course extends user {// جربنا كل الميثود و نجحو�
     LocalTime start;
     LocalTime end;
 DayOfWeek day ;
+Course depend;
     // private LocalDate day; مش كثير مفهومة
     // protected Map<Course, ArrayList<Student> > studentCourse = new HashMap<>();
     // //طلاب الكورس
@@ -47,6 +49,22 @@ DayOfWeek day ;
 
         faculty.facultyCourseArray.add(this);
         user.FacultyCourse.put(faculty, faculty.facultyCourseArray);
+    }  
+     public Course(String name, String shortcut, int credits, Staff staff, Semester semester, Faculty faculty,Course course) {
+        super();
+        this.name = name;
+        this.shortcut = shortcut;
+        this.credits = credits;
+        this.staff = staff;
+        this.semester = semester;
+        CourseList.add(this);
+        staff.addCourse(this);
+        user.staffCourse.put(staff, staff.staffCourseArray);
+        semester.c.add(this);
+        user.semesterCourse.put(semester, semester.c);
+       faculty.facultyCourseArray.add(this);
+        user.FacultyCourse.put(faculty, faculty.facultyCourseArray);
+        this.depend=course;
     }
 
     public Course(String name, String shortcut, int credits, Semester semester, Faculty faculty) {
@@ -142,21 +160,44 @@ DayOfWeek day ;
     public void setSemester(Semester semester) {
         this.semester = semester;
     }
+    
+
+
+    public Course getDepend() {
+        return depend;
+    }
+
+    public void setDepend(Course depend) {
+        this.depend = depend;
+    }
 
     public BlockingQueue<Student> getStudent() {///////////
 
         return studentCourseArray;
     }
 
-    public void setStudent(Student student) {
+    public String setStudent(Student student) {
+        if (this.depend==null){
+         studentCourseArray.offer(student);
+            student.addCourse(this);
+                    return "Dear "+student.getName()+" Done";
 
+        }
+        else{
+        int x=  (int) student.getCourse().stream().filter(e->e.equals(this.getDepend())).count();
+    
+            if (x==1){
         try {
             studentCourseArray.offer(student);
-            student.addCourse(this);
+            student.addCourse(this); 
+        return "Dear "+student.getName()+" Done";
         } catch (Exception e) {
             e.printStackTrace();
         } // السعة تم حلها ب بلوكنج كيو
-    }
+    } 
+           return "Dear "+student.getName()+" you must take this course "+this.getDepend();}}
+       
+ 
 
     public void removeStudent(int studentId) {// اول اشي عملت جبنا الكيو طلعنا منها الستيودنت الي اي دي تاعهم نفس الاي
                                               // دي الي عندي بعدين بالماب حذفتهم جبت كل واحد اله نفس الايديي و مستحت
