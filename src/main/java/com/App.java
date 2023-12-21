@@ -118,7 +118,7 @@ user user = new user();
 
    System.out.println(user.AvaliableCourses());
   
-
+System.out.println("test");
 
    ExecutorService ex=Executors.newCachedThreadPool();
        ex.execute(new GPATask());
