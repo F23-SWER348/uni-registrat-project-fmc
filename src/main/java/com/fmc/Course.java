@@ -21,6 +21,7 @@ public class Course extends user {// جربنا كل الميثود و نجحو�
     LocalTime end;
 DayOfWeek day ;
 Course depend;
+private int Capacity;
     // private LocalDate day; مش كثير مفهومة
     // protected Map<Course, ArrayList<Student> > studentCourse = new HashMap<>();
     // //طلاب الكورس
@@ -28,9 +29,7 @@ Course depend;
     // ArrayList =new ArrayList<>();
     public BlockingQueue<Student> studentCourseArray = new LinkedBlockingQueue<>(30);
 
-    public Course() {
-        CourseList.add(this);
-    };
+   
 
     public Course(String name, String shortcut, int credits, Staff staff, Semester semester, Faculty faculty) {
         super();
@@ -39,7 +38,7 @@ Course depend;
         this.credits = credits;
         this.staff = staff;
         this.semester = semester;
-        CourseList.add(this);
+       user. CourseList.add(this);
         staff.addCourse(this);
         user.staffCourse.put(staff, staff.staffCourseArray);
         semester.c.add(this);
@@ -57,7 +56,7 @@ Course depend;
         this.credits = credits;
         this.staff = staff;
         this.semester = semester;
-        CourseList.add(this);
+        user. CourseList.add(this);
         staff.addCourse(this);
         user.staffCourse.put(staff, staff.staffCourseArray);
         semester.c.add(this);
@@ -69,7 +68,7 @@ Course depend;
 
     public Course(String name, String shortcut, int credits, Semester semester, Faculty faculty) {
         super();
-        CourseList.add(this);
+      user.   CourseList.add(this);
         this.name = name;
         this.shortcut = shortcut;
         this.semester = semester;
@@ -83,7 +82,8 @@ Course depend;
         // this.studentCourse.put(this, studentCourseArray);//موقعها غلط
 
     }
-
+ public Course() {
+    };
     public String getName() {
         return name;
     }
@@ -167,8 +167,12 @@ Course depend;
         return depend;
     }
 
-    public void setDepend(Course depend) {
-        this.depend = depend;
+    public int getCapacity() {
+        return Capacity;
+    }
+
+    public void setCapacity(int capacity) {
+        Capacity = capacity;
     }
 
     public BlockingQueue<Student> getStudent() {///////////
@@ -180,6 +184,7 @@ Course depend;
         if (this.depend==null){
          studentCourseArray.offer(student);
             student.addCourse(this);
+            Capacity++;
                     return "Dear "+student.getName()+" Done";
 
         }
@@ -213,7 +218,9 @@ Course depend;
         // student.course.remove(stu);
     }
     // اذا بنحب نعمل ابديت ستيودنت
-
+// public void printAllCourse(){
+//       CourseList.stream().forEach(e->System.out.println(e.getStudent().size()));;
+// }
     public String toStringWithStudent() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Course Name: ").append(name).append("\n");

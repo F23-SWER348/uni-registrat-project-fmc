@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class user {
@@ -13,7 +14,8 @@ public class user {
      static Map<Staff, ArrayList<Course> > staffCourse = new HashMap<>();
     static Map<Student, ArrayList<Course> > courseStudent = new HashMap<>(); //كورسات الطالب 
    static  Map<Faculty, ArrayList<Course> > FacultyCourse = new HashMap<>();
-   public ArrayList<Course> CourseList=new ArrayList<>();;
+    static ArrayList<Course> CourseList=new ArrayList<>();;
+    ArrayList<Course> StuCourse = new ArrayList<>();
 
    public static Map<Semester, ArrayList<Course>> getSemesterCourse() {
     return semesterCourse;
@@ -31,11 +33,11 @@ public static Map<Faculty, ArrayList<Course>> getFacultyCourse() {
     return FacultyCourse;
 }
 
-public String AvaliableCourses() {
-    System.out.println(CourseList.toString());
-   CourseList.stream()
-            .filter(e -> e.getStudent().size()<=29).forEach(e->System.out.println(e.toString()));
-            
-    return "";}
+public  String AvaliableCourses() {
+
+  CourseList.stream().distinct() .map(e->e.getStudent().size()<29 ?  e.getName():null).filter( m->m!=null).forEach(e->System.out.println(e));
+       return "";}
+
+
 
 }
