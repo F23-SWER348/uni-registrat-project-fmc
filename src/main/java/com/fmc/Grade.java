@@ -1,13 +1,18 @@
 package com.fmc;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 public class Grade  extends Course{
     
-private Double GPA ;
+
 
 public Grade(){};
 public Grade( Double mark,Course course,Student student) {////////////
     super();
-   student.getGrade().put(course , mark);
+   student.setGrade(course , mark);
+
 
 }
 
@@ -19,19 +24,7 @@ public Grade( Double mark,Course course,Student student) {////////////
 //     //jhkjhkjh
 // }
 
-public String evaluation(){
-    // if(GPA==4)
-    // return "Heighest Honor";
-    // else if(GPA>=3.5)
-    // return "Deans";
-    // else if(GPA>=3)
-    // return "Honor";
-    //  else if(GPA<=1.5)
-    // return "Probation";
-    // return"";
-    return GPA == 4 ? "Heighest Honor" : GPA >= 3.5 ? "Deans" : GPA >= 3 ? "Honor" : GPA <= 1.5 ? "Probation" : "";
 
-}
 
 
 
