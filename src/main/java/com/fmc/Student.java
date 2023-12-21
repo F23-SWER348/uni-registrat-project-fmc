@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.RecursiveTask;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -14,14 +17,14 @@ import java.util.stream.IntStream;
 import com.fmc.Student.AssTask;
 
 public class Student extends Grade {
-
+ static Lock lock=new ReentrantLock();
+  static  Condition EvaluationAwaite= lock.newCondition();
     private String name;
     private int id;
     private String contact;
     private double gpa;
     Map<Course, Double> grade = new HashMap<>();
     private Faculty faculty;
-    ArrayList<Course> StuCourse = new ArrayList<>();
 
     public Student() {
     };
@@ -135,21 +138,22 @@ public class Student extends Grade {
     //     this.gpa = weightedPoints / totalCredits[0];
     //    weightedPoints / totalCredits[0];
  
+    lock.lock();
+  
+EvaluationAwaite.signal();
+lock.unlock();
  return  result/ totalCredits[0];
     }
 
-    public String evaluation(Double GPA) {
-        // if(GPA==4)
-        // return "Heighest Honor";
-        // else if(GPA>=3.5)
-        // return "Deans";
-        // else if(GPA>=3)
-        // return "Honor";
-        // else if(GPA<=1.5)
-        // return "Probation";
-        // return"";
-        return GPA == 4 ? "Heighest Honor" : GPA >= 3.5 ? "Deans" : GPA >= 3 ? "Honor" : GPA <= 1.5 ? "Probation" : "";
-
+    public String evaluation(Double GPA) throws InterruptedException {
+        lock.lock();
+        if (this.GPA()==0)       {
+            EvaluationAwaite.await();
+             } 
+             String s= GPA == 4 ? "Heighest Honor" : GPA >= 3.5 ? "Deans" : GPA >= 3 ? "Honor" : GPA <= 1.5 ? "Probation" : "";
+             lock.unlock();
+        return s;
+          
     }
 
     public String StudentInfo() {
@@ -162,7 +166,7 @@ public class Student extends Grade {
         return stringBuilder.toString();
     }
 
-    public StringBuilder StudentTranscripts() {
+    public StringBuilder StudentTranscripts() throws InterruptedException {
         Collection<Double> gradeStu = grade.values(); // طلت العلامات
         Collection<Course> courseStu = grade.keySet(); // طلت الكورسات
 
