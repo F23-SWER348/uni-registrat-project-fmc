@@ -4,9 +4,18 @@ import static org.junit.Assert.assertEquals;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import com.App.EvaluationTask;
+import com.App.GPATask;
 
 public class StudentTest {
     Student CelinaStu = new Student("celina", 2021094423, "fat@gmail");
@@ -22,19 +31,38 @@ public class StudentTest {
    
             Grade Fgrade = new Grade(3.0, math1, FatmaStu);
         Grade Fgrade2 = new Grade(4.0, math2, FatmaStu);  
-                            Schedule celinaSchedule = new Schedule(CelinaStu);
+                            Schedule celinaSchedule = new Schedule(CelinaStu);  
+     
+                            
+
+
+                            private ExecutorService executorService;
+                            user user = new user();
+ String s;
 
      @Before
-     public void setup(){ 
-        
-           FatmaStu.evaluation(FatmaStu.GPA()); 
-           math1.setStudent(CelinaStu);
+     public void setup() throws InterruptedException{ 
+   
+         math1.setStudent(CelinaStu);
            math2.setStudent(CelinaStu);
                    math2.setStart(LocalTime.of(7, 30, 0));
                    math1.setStart(LocalTime.of(8, 0, 0));
                    math2.setStudent(MaiStu);
+        
+                executorService = Executors.newCachedThreadPool();
+                executorService.execute(() -> {
+                    new GPATask().run();
+                });
+        
+                executorService.execute(() -> {
+                    new EvaluationTask().run();
+                });
+            
+            FatmaStu.evaluation(FatmaStu.GPA());
+            s=FatmaStu.StudentTranscripts().toString();
+  
 
- }
+        }
 
    @Test
    public void GPA_TEST() {
@@ -44,10 +72,18 @@ public class StudentTest {
     }
 
    @Test
-   public void Evaluation() {
-        assertEquals("Deans", FatmaStu.evaluation(FatmaStu.GPA()));  
-        
-    }
+
+
+public void evaluationTest() throws InterruptedException {
+        executorService = Executors.newCachedThreadPool();
+    executorService.execute(new GPATask());
+    executorService.execute(new EvaluationTask());
+    executorService.shutdown();
+    executorService.awaitTermination(20, TimeUnit.SECONDS); // انتظار 5 ثوانٍ على سبيل المثال
+
+        assertEquals("Deans", FatmaStu.evaluation(FatmaStu.GPA()));
+    
+}
 
 
     String expected = "Student Name: fatma      Student ID: 202109442       Contact: fat@gmail      \r\n" + //
@@ -55,12 +91,13 @@ public class StudentTest {
             "Math1------3.0--------3---------B\r\n" + //
             "Math2------4.0--------4---------A\r\n" + //
             "GPA: 3.5714285714285716Your evaluation :Deans";
-     String s =FatmaStu.StudentTranscripts().toString();
+
+   
 
     @Test
     public void transcripts() {
-        // assertEquals(true, s.trim().equals(expected.trim()));
-        // assertEquals(expected.trim(), s.trim());
+        assertEquals(expected.replaceAll("\\s", ""),s.replaceAll("\\s", ""));
+      
      }
    
        @Test
@@ -85,5 +122,18 @@ public class StudentTest {
       public void depended() {
  assertEquals("Dear mai you must take this course Course Name: Math1---Shortcut: math131---Credits: 3---",math2.setStudent(MaiStu));
      }
+
+// @Test
+//       public void Avaliable() {
+//  assertEquals("math swer history swerOS Math1 Math2 Math4 Math6".trim(),user.AvaliableCourses().trim());
+//      }
+// @Test
+// public void Avaliable() {
+//     String result = user.AvaliableCourses();
+
+//     assertEquals("math swer history swerOS Math1 Math2 Math4 Math6".replaceAll("\\s", ""), result.replaceAll("\\s", ""));
+// }
+
+//الخلل انو بطبع ايري فاضية 
 
 }
