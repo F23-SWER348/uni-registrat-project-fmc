@@ -195,6 +195,7 @@ private int Capacity;
         try {
             studentCourseArray.offer(student);
             student.addCourse(this); 
+              Capacity++;
         return "Dear "+student.getName()+" Done";
         } catch (Exception e) {
             e.printStackTrace();
