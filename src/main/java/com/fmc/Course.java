@@ -109,14 +109,14 @@ private int Capacity;
         this.shortcut = shortcut;
     }
 
-    public String gradeABC() {
+    public String gradeABC(Double grade) {
 
-        return this.getCredits() == 4 ? "A"
-                : this.getCredits() >= 3.5 ? "B+"
-                        : this.getCredits() >= 3 ? "B"
-                                : this.getCredits() <= 2.5 ? "C+"
-                                        : this.getCredits() >= 2 ? "C"
-                                                : this.getCredits() >= 1.5 ? "D+" : this.getCredits() >= 1 ? "D" : "I";
+        return grade == 4 ? "A"
+                : grade>= 3.5 ? "B+"
+                        : grade >= 3 ? "B"
+                                : grade <= 2.5 ? "C+"
+                                        : grade >= 2 ? "C"
+                                                : grade >= 1.5 ? "D+" : grade >= 1 ? "D" : "I";
 
     }
 

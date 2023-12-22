@@ -182,8 +182,8 @@ lock.unlock();
                     Double gradeValue = grade.values().stream().skip(i).findFirst().orElse(0.0);
                     totalCredits[0] += course.getCredits();
                     // return gradeValue * course.getCredits();
-                    stringBuilder.append(course.getName() + "------" + gradeValue + "--------" + course.getCredits()
-                            + "---------" + course.gradeABC() + "\n");
+                    stringBuilder.append(course.getName() + "------" +course.getCredits() + "--------" + gradeValue 
+                            + "---------" + course.gradeABC(gradeValue) + "\n");
 
                 });
                 
