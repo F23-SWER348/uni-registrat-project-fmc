@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
@@ -16,6 +17,7 @@ import org.junit.Test;
 
 import com.App.EvaluationTask;
 import com.App.GPATask;
+import com.parser.StudentReader;
 
 public class StudentTest {
     Student CelinaStu = new Student("celina", 2021094423, "fat@gmail");
@@ -26,11 +28,11 @@ public class StudentTest {
     Staff MB = new Staff("fatma", "ghg@jjkh", "02115");
     Faculty science = new Faculty("science", "hjhj");
     Semester s2024 = new Semester("", 2023, LocalDate.of(2021, 1, 1), LocalDate.of(2021, 1, 1));
-    Course math1 = new Course("Math1", "math131", 3, MB, s2024, science);
+       Course math1 = new Course("Math1", "math131", 3, MB, s2024, science);
     Course math2 = new Course("Math2", "math132", 4, MB, s2024, science, math1);
-
-    Grade Fgrade = new Grade(3.0, math1, FatmaStu);
+ Grade Fgrade = new Grade(3.0, math1, FatmaStu);
     Grade Fgrade2 = new Grade(4.0, math2, FatmaStu);
+   
     Schedule celinaSchedule = new Schedule(CelinaStu);
 
     private ExecutorService executorService;
@@ -45,7 +47,9 @@ public class StudentTest {
         math2.setStart(LocalTime.of(7, 30, 0));
         math1.setStart(LocalTime.of(8, 0, 0));
         math2.setStudent(MaiStu);
-
+        math1.setStudent(FatmaStu);
+        math1.removeStudent(202109442);
+ math2.setStudent(FatmaStu);
         executorService = Executors.newCachedThreadPool();
         executorService.execute(() -> {
             new GPATask().run();
@@ -104,7 +108,11 @@ public class StudentTest {
     public void getCourseStudent() {
         assertEquals(true, CelinaStu.getCourse().contains(math1) && CelinaStu.getCourse().contains(math2));
     }
-
+  
+    @Test
+    public void getStudent() {
+        assertEquals(true,   math2.getStudent().contains(FatmaStu) );
+    }
     @Test
     public void getCourseStaff() {
         assertEquals(true, MB.getCourse().contains(math1) && MB.getCourse().contains(math2));
@@ -117,19 +125,19 @@ public class StudentTest {
                 math2.setStudent(MaiStu));
     }
 
-    // @Test
-    // public void Avaliable() {
-    // assertEquals("math swer history swerOS Math1 Math2 Math4
-    // Math6".trim(),user.AvaliableCourses().trim());
-    // }
-    // @Test
-    // public void Avaliable() {
-    // String result = user.AvaliableCourses();
+ 
+    @Test
+    public void Avaliable() { // الخلل انو بطبع ايري فاضية
+    String result = user.AvaliableCourses() ;
+    // assertEquals(true,.isEmpty());
 
-    // assertEquals("math swer history swerOS Math1 Math2 Math4
-    // Math6".replaceAll("\\s", ""), result.replaceAll("\\s", ""));
-    // }
+    assertEquals("math swer history swerOS Math1 Math2 Math4  Math6".replaceAll("\\s", ""), result.replaceAll("\\s", ""));
+    }
+    @Test
+    public void addStudentIfTookTheRequiredCourses() {
 
-    // الخلل انو بطبع ايري فاضية
+    assertEquals("Dear mai you must take this course Course Name: Math1---Shortcut: math131---Credits: 3---".replaceAll("\\s", ""), math2.setStudent(MaiStu).replaceAll("\\s", ""));
+    }
+   
 
 }
