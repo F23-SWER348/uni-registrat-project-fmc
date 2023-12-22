@@ -54,8 +54,6 @@ user user = new user();
     Semester s2023 = new Semester("", year, LocalDate.of(2021, 1, 1), LocalDate.of(2021, 1, 1));
     Semester s2024 = new Semester("", year, LocalDate.of(2021, 1, 1), LocalDate.of(2021, 1, 1));
 
-    Schedule MaiSchedula = new Schedule(Mai);
-    Schedule FatmaSchedula = new Schedule(Fatma);
     Course math1 = new Course("Math1", "math131", 4, Fatma, s2024, science);
     Course math2 = new Course("Math2", "math132", 4, Fatma, s2024, science, math1);
     Course math4 = new Course("Math4", "math134", 3, Mai, s2023, science2);
@@ -70,16 +68,18 @@ user user = new user();
     Student MaiStu = new Student("mai", 2021094423, "fat@gmail");
     Student CelinaStu = new Student("celina", 2021094423, "fat@gmail");
     System.out.println("We will add students to the course if the student has taken the previous required courses");//بضيف الطالب للكورس اذا كان ماخد الكورسات المعتمدة عليه
-                                                                                                                 
-    System.out.println(math2.setStudent(CelinaStu));
     math1.setStart(LocalTime.of(8, 0, 0));
+                                                                                                     
+    System.out.println(math1.setStudent(CelinaStu));
+    System.out.println(math2.setStudent(CelinaStu));
     System.out.println(math1.setStudent(FatmaStu));
-    System.out.println(math2.setStudent(FatmaStu));
     System.out.println(math2.setStudent(MaiStu));
 
+    math1.setStart(LocalTime.of(8, 30, 0));
+   math1.setDay("monday");
     math2.setStart(LocalTime.of(8, 30, 0));
     math2.setDay("monday");
-    math1.setDay("monday");
+ 
    
     math4.setStart(LocalTime.of(8, 0, 0));
     math6.setStart(LocalTime.of(9, 1, 0)); 
@@ -87,8 +87,13 @@ user user = new user();
     math6.setDay("monday");
     System.out.println("to test if celina schedule have a conflect ?");
     Schedule celinaSchedule = new Schedule(CelinaStu);
+    
+    Schedule MaiSchedula = new Schedule(Mai);
+    Schedule FatmaSchedula = new Schedule(FatmaStu);
     System.out.println(" time conflicts: " + celinaSchedule.conflect());// نجحت
     System.out.println("celina Schedule :\n" + celinaSchedule.toStringStu());// نجحت
+        System.out.println("Fatma  Schedule :\n" + FatmaSchedula.toStringStu());// نجحت
+
     math1.removeStudent(202109442);// نجحت
     System.out.println("math1 students");
     math1.getStudent().stream().forEach(e -> System.out.println(e.getName()));// نجحت
@@ -109,7 +114,6 @@ user user = new user();
       System.out.println("evaluation test \n" + FatmaStu.evaluation(3.0));
       System.out.println("Student Fatma evaluation \n" + FatmaStu.evaluation(FatmaStu.GPA()));
     } catch (InterruptedException e1) {
-      // TODO Auto-generated catch block
       e1.printStackTrace();
     }
 
