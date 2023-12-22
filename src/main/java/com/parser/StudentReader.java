@@ -56,9 +56,13 @@ public class StudentReader {
                     for (int i = 0; i < courseArray.size(); i++) {
                         String courseName = (String) courseArray.get(i);
 
-                        Course course = courses.stream().filter(e -> e.getName().equals(courseName))
-                                .collect(Collectors.toList()).get(0);
+                        Course course = courses.stream().filter(e -> e.getName().equals(courseName)).findFirst().get();
+                        System.out.println(course);
+                                // .collect(Collectors.toList()).get(0);
+                    course.setStudent(student);
 
+                    // System.out.println(course.getStudent().isEmpty());
+                    // System.out.println(student.getCourse().isEmpty());
                         student.addCourse(course);// مش عارف اذا راح تزبط
 
                     }
@@ -87,6 +91,7 @@ public class StudentReader {
         return students;
     }
    Faculty faculty; Staff staff ; Semester semester;
+
 
     public ArrayList<Course> readCourse() {// بترجع و بتجيب اريي الكورسات
         JSONParser parser = new JSONParser();

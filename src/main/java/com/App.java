@@ -4,10 +4,14 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.TreeMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import com.fmc.Course;
 import com.fmc.Faculty;
@@ -32,12 +36,13 @@ user user = new user();
     System.out.println("read from file and return the info in array list ");
     StudentReader sr = new StudentReader("assets\\data\\student.json", "assets\\data\\course.json",
         "assets\\data\\Semester.json", "assets\\data\\staff.json", "assets\\data\\faculty.json");
-    ArrayList<Faculty> facultys = sr.readFaculty();
+   
+     ArrayList<Faculty> facultys = sr.readFaculty();
     ArrayList<Staff> staffs = sr.readStaff();
     ArrayList<Semester> semester = sr.readSemester();
-    ArrayList<Course> course = sr.readCourse();
-    ArrayList<Student> student = sr.readStudent();
-
+    ArrayList<Course> course = sr.readCourse(); 
+     ArrayList<Student> student = sr.readStudent();
+  
     System.out.println("the courses that are taught by FQ");
     Optional<Staff> f = staffs.stream().filter(e -> e.getName().equals("FQ")).findFirst();
     System.out.println(f.get().getCourse());
@@ -60,13 +65,17 @@ user user = new user();
     Course math6 = new Course("Math6", "math136", 3, Mai, s2023, science2);
     
     Stream.of(science.getCourse()).forEach(e -> System.out.print("\n The Science Courses :\n " + e.toString() + "\n"));// نجحت
+    System.out.println();
     Stream.of(s2023.getCourse()).forEach(e -> System.out.print("\n the s2023 courses:\n " + e.toString()));// نجحت
+     System.out.println();
     Stream.of(Mai.getCourse()).forEach(e -> System.out.print("\n the Mai staff courses:\n " + e.toString()));// نجحت
-
+ System.out.println();
     ArrayList<Course> s = Mai.getCourse();
     System.out.println("\n another way to print Mai Staff courses \n " + s.toString());
     Student MaiStu = new Student("mai", 2021094423, "fat@gmail");
     Student CelinaStu = new Student("celina", 2021094423, "fat@gmail");
+     System.out.println();
+      System.out.println();
     System.out.println("We will add students to the course if the student has taken the previous required courses");//بضيف الطالب للكورس اذا كان ماخد الكورسات المعتمدة عليه
     math1.setStart(LocalTime.of(8, 0, 0));
                                                                                                      
@@ -74,6 +83,8 @@ user user = new user();
     System.out.println(math2.setStudent(CelinaStu));
     System.out.println(math1.setStudent(FatmaStu));
     System.out.println(math2.setStudent(MaiStu));
+     System.out.println(math2.setStudent(FatmaStu));
+
 
     math1.setStart(LocalTime.of(8, 30, 0));
    math1.setDay("monday");
@@ -85,52 +96,91 @@ user user = new user();
     math6.setStart(LocalTime.of(9, 1, 0)); 
     math4.setDay("monday");
     math6.setDay("monday");
+     System.out.println("");
+      System.out.println("");
     System.out.println("to test if celina schedule have a conflect ?");
     Schedule celinaSchedule = new Schedule(CelinaStu);
     
     Schedule MaiSchedula = new Schedule(Mai);
     Schedule FatmaSchedula = new Schedule(FatmaStu);
     System.out.println(" time conflicts: " + celinaSchedule.conflect());// نجحت
+     System.out.println();
     System.out.println("celina Schedule :\n" + celinaSchedule.toStringStu());// نجحت
-        System.out.println("Fatma  Schedule :\n" + FatmaSchedula.toStringStu());// نجحت
-
+         System.out.println();
+    System.out.println("Fatma  Schedule :\n" + FatmaSchedula.toStringStu());// نجحت
+ System.out.println();
     math1.removeStudent(202109442);// نجحت
-    System.out.println("math1 students");
+    System.out.println("math1 students");//مفروض يطبع سيلينا بس لانه مسحنا فاطمة من الكورس سطر 97
     math1.getStudent().stream().forEach(e -> System.out.println(e.getName()));// نجحت
-
-    System.out.println("Mai courses :");
-    MaiStu.getCourse().stream().forEach(e -> System.out.println(e));// نجحت
-
+     System.out.println();
+    System.out.println("math2 students");
+     math2.getStudent().stream().forEach(e -> System.out.println(e.getName()));//مفروض يطبع بس سيلينا وفاطمة لانو ما اخدت ماث 1 وهي متطلب اساسي قبل ماث2
+     System.out.println();
+     System.out.println("Mai student courses :");
+    MaiStu.getCourse().stream().forEach(e -> System.out.println(e));// مفروض ما تطبع اشي لانو ما اخدت كورسات
+ System.out.println();
+    System.out.println("Celina student courses :");
+    CelinaStu.getCourse().stream().forEach(e -> System.out.println(e));
+ System.out.println();
     System.out.println("staff Mai Schedule :\n" + MaiSchedula.toStringStaff());// نجحت
+     System.out.println();
     System.out.println("Staff Mai courses :" + Mai.getCourse().toString());
 
     Grade Fgrade = new Grade(3.0, math1, FatmaStu);
     Grade Fgrade2 = new Grade(4.0, math2, FatmaStu);
     System.out.println("Student Fatma info \n" + FatmaStu.StudentInfo());
+     System.out.println();
     System.out.println("Student Fatma GPA \n" + FatmaStu.GPA());
     try {
+       System.out.println();
       System.out.println("Student Fatma Transcripts \n" + FatmaStu.StudentTranscripts());
 
-      System.out.println("evaluation test \n" + FatmaStu.evaluation(3.0));
       System.out.println("Student Fatma evaluation \n" + FatmaStu.evaluation(FatmaStu.GPA()));
-    } catch (InterruptedException e1) {
+    } 
+    catch (InterruptedException e1) {
       e1.printStackTrace();
     }
+     System.out.println();
 
     System.out.println("Staff Mai info :" + Mai.toString());
+     System.out.println();
     System.out.println("Faculty  science info :" + science.toString());
+     System.out.println();
     System.out.println("Avaliable courses");
 
    System.out.println(user.AvaliableCourses());
-  
-System.out.println("test");
+   ///////////////////////////////////////////////////////////////////////
+  System.out.println("");
+   System.out.println("we will try to read from file");
+   student.stream().forEach(e-> System.out.println(e.getName()+"  "+ e.GPA()));
+   System.out.println(" ");
+   //staffs.stream().map(e->new Schedule(e)).forEach(e->System.out.println(e.getName()+"Schedule"+e.toStringStaff())); لازم نحط اوقات للكورسات
+   staffs.stream().forEach(e->System.out.println(e.getName()+"\n"+e.getCourse().toString()));
+   System.out.println(" ");
+   semester.stream().forEach(e->System.out.println(e.getName()+"\n"+e.getCourse()));
+      System.out.println(" ");
+   facultys.stream().forEach(e->System.out.println(e.getName()+"\n"+e.getCourse().toString()));
+   System.out.println(" ");
 
+   //course.getStudent().stream().forEach(e -> System.out.println(e.getName()));
+   course.stream().forEach(e->System.out.println(e.getStudent().toString()));
+   student.stream().forEach(e->System.out.println(e.getCourse().toString()));
+   //course.stream().forEach(e->System.out.println(e.getName()+"\n"+e.getStudent()));
+  //   Map<Object, List<Course>> c = course.stream().collect(Collectors.groupingBy(e->e.getStudent(),TreeMap::new ,Collectors.toList() ));
+  //  Stream.of(c.keySet()).forEach((v)->System.out.println(v.toString()));
+    ///////////////////////////////////////////////////////////////////////
+ System.out.println("");
+ System.out.println("Thread:");
    ExecutorService ex=Executors.newCachedThreadPool();
        ex.execute(new GPATask());
         ex.execute(new EvaluationTask()); 
         
         ex.shutdown();
+
+        
     
+      
+
 
     ////////////// فحص النواقص
 
@@ -153,9 +203,7 @@ System.out.println("test");
     // 1لازم بعض من الكلاسات يكونوا ثريد سيف
     // 1ولازم نشرح الجي بي ا على الباررل كومبيوت و ع كمان ميثود
     // 0.5اعمل تيست ل 13 ميثود  (8)
-  
-
-//celinaaaaaa
+    //celinaaaaaa
 
 }
 

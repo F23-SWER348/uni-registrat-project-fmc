@@ -15,7 +15,7 @@ public class user {
     static Map<Student, ArrayList<Course> > courseStudent = new HashMap<>(); //كورسات الطالب 
    static  Map<Faculty, ArrayList<Course> > FacultyCourse = new HashMap<>();
     static ArrayList<Course> CourseList=new ArrayList<>();;
-    ArrayList<Course> StuCourse = new ArrayList<>();
+   static ArrayList<Course> StuCourse = new ArrayList<>();
 
    public static Map<Semester, ArrayList<Course>> getSemesterCourse() {
     return semesterCourse;
