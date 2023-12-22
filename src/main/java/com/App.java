@@ -56,10 +56,10 @@ user user = new user();
 
     Schedule MaiSchedula = new Schedule(Mai);
     Schedule FatmaSchedula = new Schedule(Fatma);
-    Course math1 = new Course("Math1", "math131", 3, Fatma, s2024, science);
+    Course math1 = new Course("Math1", "math131", 4, Fatma, s2024, science);
     Course math2 = new Course("Math2", "math132", 4, Fatma, s2024, science, math1);
-    Course math4 = new Course("Math4", "math134", 34, Mai, s2023, science2);
-    Course math6 = new Course("Math6", "math136", 36, Mai, s2023, science2);
+    Course math4 = new Course("Math4", "math134", 3, Mai, s2023, science2);
+    Course math6 = new Course("Math6", "math136", 3, Mai, s2023, science2);
     
     Stream.of(science.getCourse()).forEach(e -> System.out.print("\n The Science Courses :\n " + e.toString() + "\n"));// نجحت
     Stream.of(s2023.getCourse()).forEach(e -> System.out.print("\n the s2023 courses:\n " + e.toString()));// نجحت
@@ -80,10 +80,11 @@ user user = new user();
     math2.setStart(LocalTime.of(8, 30, 0));
     math2.setDay("monday");
     math1.setDay("monday");
-    math2.setDay("monday");
-    math1.setDay("monday");
+   
     math4.setStart(LocalTime.of(8, 0, 0));
-    math6.setStart(LocalTime.of(9, 1, 0));
+    math6.setStart(LocalTime.of(9, 1, 0)); 
+    math4.setDay("monday");
+    math6.setDay("monday");
     System.out.println("to test if celina schedule have a conflect ?");
     Schedule celinaSchedule = new Schedule(CelinaStu);
     System.out.println(" time conflicts: " + celinaSchedule.conflect());// نجحت
