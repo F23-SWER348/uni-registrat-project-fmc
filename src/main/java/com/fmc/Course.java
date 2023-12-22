@@ -27,7 +27,7 @@ private int Capacity;
     // //طلاب الكورس
 
     // ArrayList =new ArrayList<>();
-    public BlockingQueue<Student> studentCourseArray = new LinkedBlockingQueue<>(30);
+    public   BlockingQueue<Student> studentCourseArray = new LinkedBlockingQueue<>(30);
 
    
 
@@ -38,7 +38,7 @@ private int Capacity;
         this.credits = credits;
         this.staff = staff;
         this.semester = semester;
-       user. CourseList.add(this);
+        user. CourseList.add(this);
         staff.addCourse(this);
         user.staffCourse.put(staff, staff.staffCourseArray);
         semester.c.add(this);
@@ -175,11 +175,16 @@ private int Capacity;
         Capacity = capacity;
     }
 
-    public BlockingQueue<Student> getStudent() {///////////
+    public  BlockingQueue<Student> getStudent() {///////////
 
         return studentCourseArray;
     }
 
+    
+    // public  List <Student> getStudent() {///////////
+
+    //     return studentCourseArray.stream().filter(e->e.getName().equals(this.getName())).collect(Collectors.toList());
+    // }
     public String setStudent(Student student) {
         if (this.depend==null){
          studentCourseArray.offer(student);

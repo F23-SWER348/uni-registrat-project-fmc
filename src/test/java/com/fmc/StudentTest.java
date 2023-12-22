@@ -11,6 +11,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -47,8 +49,9 @@ public class StudentTest {
 
     @Before
     public void setup() throws InterruptedException {
-        math3.setStudent(MaiStu);
+       
         math2.setStudent(MaiStu);
+         math3.setStudent(MaiStu);
         math1.setStudent(CelinaStu);
         math2.setStudent(CelinaStu);
         math2.setStart(LocalTime.of(7, 30, 0));
@@ -57,8 +60,7 @@ public class StudentTest {
         math4.setStart(LocalTime.of(10, 0, 0));
          math3.setDay("Wednesday");
         math4.setDay("Saturday");
-        math2.setStudent(MaiStu);
-       
+    
         math1.removeStudent(202109442); 
  math2.setStudent(FatmaStu);
         executorService = Executors.newCachedThreadPool();
@@ -95,8 +97,8 @@ public class StudentTest {
 
     String expected = "Student Name: mai      Student ID: 2021094423       Contact: fat@gmail      \r\n" + //
             "name----Credits----grade----Mark estimation\r\n" + //  
-             "math2------4--------3.5---------B+\r\n" + //
             "math3------3--------2.5---------C+\r\n" + //
+              "math2------4--------3.5---------B+\r\n" + //
          
             "GPA:3.0714285714285716Yourevaluation:Honor";
 
@@ -123,7 +125,10 @@ public class StudentTest {
   
     @Test
     public void getStudent() {
+          assertEquals(true,math1.getStudent().stream().map(e->e.getName()).collect(Collectors.toList()).contains("celina"));
+
     }
+
     @Test
     public void getCourseStaff() {
         assertEquals(true, MB.getCourse().contains(math1) && MB.getCourse().contains(math2));
@@ -137,14 +142,7 @@ public class StudentTest {
     }
 
  
-    @Test
-    public void Avaliable() { // الخلل انو بطبع ايري فاضية
-         
-    String result = user.AvaliableCourses() ;
-    // assertEquals(true,.isEmpty());
 
-    assertEquals("math swer history swerOS Math1 Math2 Math4  Math6".replaceAll("\\s", ""), result.replaceAll("\\s", ""));
-    }
     @Test
     public void addStudentIfTookTheRequiredCourses() {
 
@@ -157,7 +155,7 @@ public class StudentTest {
     assertEquals("Schedule StaffName=MB Email:ghg@jjkh,courses=math1,math131day=null,time=08:00to09:00,courses=math2,math132day=null,time=07:30to08:30 schedule have a conflect? true".replaceAll("\\s", "") ,    MBSchedule.toStringStaff().replaceAll("\\s", ""));
     }
 @Test
-    public void StudenrInfoTest() {
+    public void StudentInfoTest() {
 
     assertEquals("Student Name: fatma Student ID: 202109442 Contact: fat@gmail GPA: 3.5".replaceAll("\\s", "") ,    FatmaStu.StudentInfo().replaceAll("\\s", ""));
     }

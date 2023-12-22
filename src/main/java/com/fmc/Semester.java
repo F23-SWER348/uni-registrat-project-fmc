@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class Semester extends Course {
@@ -61,9 +62,11 @@ public class Semester extends Course {
     }
 
     public ArrayList<Course> getCourse() {
+        
         return semesterCourse.get(this);
 
     }
+
 
     public void createNewCourseinSemester(String name, String shortcut, int credits, Faculty faculty) {
 
@@ -87,7 +90,17 @@ public class Semester extends Course {
 
     @Override
     public String toString() {
-        return "Semester [c=" + c + ", name=" + name + ", year=" + year + ", start=" + start + ", end=" + end + "]";
-    }
+        
+            return "Semester [c=" + c + ", name=" + name + ", year=" + year + ", start=" + start + ", end=" + end + "]";
+            
+        }
+      
+    // }
+    // public Optional<String> toStringOptional() {
+    //     return Optional.ofNullable(c)
+    //             .map(cValue -> "Semester [c=" + cValue + ", name=" + name +
+    //                     ", year=" + year + ", start=" + start + ", end=" + end + "]")
+    //             .or(() -> Optional.of("Don't have any course in this semester"));
+    // }
 
 }
