@@ -62,8 +62,9 @@ public class Semester extends Course {
     }
 
     public ArrayList<Course> getCourse() {
-        
-        return semesterCourse.get(this);
+        if (semesterCourse.get(this)==null) 
+        System.out.println("this semester have not  any course");
+       return semesterCourse.get(this);
 
     }
 
@@ -73,7 +74,7 @@ public class Semester extends Course {
         Course course = new Course(name, shortcut, credits, this, faculty);
         this.c.add(course);
         this.semesterCourse.put(this, c);
-        // اتأكد انها شغالة
+     
     }
 
     public void removeCourse(Course course) {

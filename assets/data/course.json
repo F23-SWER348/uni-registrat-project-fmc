@@ -6,6 +6,7 @@
         "staff":"MB",
         "semester":"fall2023",
         "faculty":"science"
+     
         
     },
     {
@@ -14,7 +15,9 @@
         "credits": 3,
         "staff":"FQ",
         "semester":"fall2023",
-        "faculty":"science"
+        "faculty":"science",
+        "start": "10:30:00",
+        "day": "tuesday"
         
     },
     {
@@ -23,7 +26,9 @@
         "credits": 3,
         "staff":"JG",
         "semester":"spring2023",
-        "faculty":"Art"
+        "faculty":"Art",
+        "start": "10:30:00",
+        "day": "tuesday"
         
     },
     {
@@ -32,7 +37,10 @@
         "credits": 3,
         "staff":"FQ",
         "semester":"fall2023",
-        "faculty":"science"
+        "faculty":"science",
+        "start": "10:30:00",
+        "day": "tuesday"
+       
         
     }
 ]

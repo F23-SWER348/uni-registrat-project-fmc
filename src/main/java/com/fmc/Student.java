@@ -25,6 +25,7 @@ public class Student extends Grade {
     private double gpa;
     Map<Course, Double> grade = new HashMap<>();
     private Faculty faculty;
+  ArrayList<Course> StuCourse = new ArrayList<>();
 
     public Student() {
     };
@@ -51,6 +52,8 @@ public class Student extends Grade {
     // }
 
     public List<Course> getCourse() {
+        if (this.StuCourse.isEmpty())
+        System.out.println(this.name +"  dont have any course");
         return this.StuCourse;
     }
 

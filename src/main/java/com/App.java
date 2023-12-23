@@ -102,14 +102,16 @@ user user = new user();
     Schedule celinaSchedule = new Schedule(CelinaStu);
     
     Schedule MaiSchedula = new Schedule(Mai);
-    Schedule FatmaSchedula = new Schedule(FatmaStu);
+    
     System.out.println(" time conflicts: " + celinaSchedule.conflect());// نجحت
      System.out.println();
     System.out.println("celina Schedule :\n" + celinaSchedule.toStringStu());// نجحت
-         System.out.println();
-    System.out.println("Fatma  Schedule :\n" + FatmaSchedula.toStringStu());// نجحت
+         System.out.println(); 
+       math1.removeStudent(202109442);// نجحت
+    Schedule FatmaSchedula = new Schedule(FatmaStu); 
+     System.out.println("Fatma  Schedule :\n" + FatmaSchedula.toStringStu());// نجحت
  System.out.println();
-    math1.removeStudent(202109442);// نجحت
+   
     System.out.println("math1 students");//مفروض يطبع سيلينا بس لانه مسحنا فاطمة من الكورس سطر 97
     math1.getStudent().stream().forEach(e -> System.out.println(e.getName()));// نجحت
      System.out.println();
@@ -121,14 +123,18 @@ user user = new user();
  System.out.println();
     System.out.println("Celina student courses :");
     CelinaStu.getCourse().stream().forEach(e -> System.out.println(e));
- System.out.println();
+
+     System.out.println("Fatma student courses :");
+
+   System.out.println(FatmaStu.getCourse());
+
     System.out.println("staff Mai Schedule :\n" + MaiSchedula.toStringStaff());// نجحت
      System.out.println();
     System.out.println("Staff Mai courses :" + Mai.getCourse().toString());
 
     Grade Fgrade = new Grade(3.0, math1, FatmaStu);
     Grade Fgrade2 = new Grade(4.0, math2, FatmaStu);
-    System.out.println("Student Fatma info \n" + FatmaStu.StudentInfo());
+    System.out.println("\n Student Fatma info \n" + FatmaStu.StudentInfo());
      System.out.println();
     System.out.println("Student Fatma GPA \n" + FatmaStu.GPA());
     try {
@@ -154,20 +160,22 @@ user user = new user();
    System.out.println("we will try to read from file");
    student.stream().forEach(e-> System.out.println(e.getName()+"  "+ e.GPA()));
    System.out.println(" ");
-   //staffs.stream().map(e->new Schedule(e)).forEach(e->System.out.println(e.getName()+"Schedule"+e.toStringStaff())); لازم نحط اوقات للكورسات
+   student.stream().forEach(e-> System.out.println(e.getName()+"  "+ e.getCourse().toString()));
+    System.out.println(" ");
    staffs.stream().forEach(e->System.out.println(e.getName()+"\n"+e.getCourse().toString()));
    System.out.println(" ");
-   semester.stream().forEach(e->System.out.println(e.getName()+"\n"+e.getCourse()));
+      staffs.stream().map(e->new Schedule(e)).forEach(x->System.out.println(x.getStaff().getName()+"    Schedule"+x.toStringStaff()+"\n\n"));// اذا ما دخلت اوقات راح يطبع الي انو لازم ادخل اوقات 
+
+   semester.stream().forEach(e->System.out.println(e.getName()+"   "+e.getCourse()+"\n\n"));
       System.out.println(" ");
    facultys.stream().forEach(e->System.out.println(e.getName()+"\n"+e.getCourse().toString()));
    System.out.println(" ");
 
-   //course.getStudent().stream().forEach(e -> System.out.println(e.getName()));
-   course.stream().forEach(e->System.out.println(e.getStudent().toString()));
-   student.stream().forEach(e->System.out.println(e.getCourse().toString()));
-   //course.stream().forEach(e->System.out.println(e.getName()+"\n"+e.getStudent()));
-  //   Map<Object, List<Course>> c = course.stream().collect(Collectors.groupingBy(e->e.getStudent(),TreeMap::new ,Collectors.toList() ));
-  //  Stream.of(c.keySet()).forEach((v)->System.out.println(v.toString()));
+   course.stream().forEach(e ->{
+   System.out.print(e.getName() + " --> ");
+   e.getStudent().stream().forEach(m -> System.out.print(m.getName() + " "));
+   System.out.println(); }
+);  
     ///////////////////////////////////////////////////////////////////////
  System.out.println("");
  System.out.println("Thread:");
@@ -180,30 +188,6 @@ user user = new user();
         
     
       
-
-
-    ////////////// فحص النواقص
-
-    // كورس ريجستريشن 1
-    // كلاس سكاجويلنج1
-    // 1ادارة تسجيل الطلاب //ما بقدر احطها ب فاكلتي معينة
-    // 1تقرير عن كشف العلامات زي اخر كل فصل زي لما تطلع علاماتنا اخر الفصل
-    // 1 نعمل نيو ستودينت و نيو فاكاتي
-    // 1نعمل اشي يجيب معلومات الستيودت الي هما الاسم معلومات التواصل الرول اذا هو
-    // 1 ستيودنت ولا ستاف
-    // 1يسمح يعمل فصل جديد
-    // 1 اليوم و البداية و النهاية و اكثر من موعد للكورس في == كيف يعمل نيو كورس عن
-    // 1طريق اسم الكورس وعدد الساعات و اي فاكلتي تابع ويحط موعدها الاسبوعي الها
-    // 1بقدر يسجل الطلاب ب الكلاس ،بس لازم يتأكد انو
-    // 1يدور على الكورسات المتاحة و يشوف المتطلبات و يسجل الطلاب ب الحصص بس لازم
-    // 1يتأكد انو الكرس ما بعتمد ع كورس مش مأخوذ
-    // 1 مدير التسجيل يدخل علامات الطلاب بالكورسات تاعونهم
-    // 1يتابع الحالة الاكاديمية للطالب و يقدم تقرير
-    // 1لازم يطلعلي الجدول و يتأكد انو نا في تضارب اضا في يحكي
-    // 1لازم بعض من الكلاسات يكونوا ثريد سيف
-    // 1ولازم نشرح الجي بي ا على الباررل كومبيوت و ع كمان ميثود
-    // 0.5اعمل تيست ل 13 ميثود  (8)
-    //celinaaaaaa
 
 }
 
@@ -235,3 +219,27 @@ user user = new user();
      }
   }
 }}
+
+
+    ////////////// فحص النواقص
+
+    // كورس ريجستريشن 1
+    // كلاس سكاجويلنج1
+    // 1ادارة تسجيل الطلاب //ما بقدر احطها ب فاكلتي معينة
+    // 1تقرير عن كشف العلامات زي اخر كل فصل زي لما تطلع علاماتنا اخر الفصل
+    // 1 نعمل نيو ستودينت و نيو فاكاتي
+    // 1نعمل اشي يجيب معلومات الستيودت الي هما الاسم معلومات التواصل الرول اذا هو
+    // 1 ستيودنت ولا ستاف
+    // 1يسمح يعمل فصل جديد
+    // 1 اليوم و البداية و النهاية و اكثر من موعد للكورس في == كيف يعمل نيو كورس عن
+    // 1طريق اسم الكورس وعدد الساعات و اي فاكلتي تابع ويحط موعدها الاسبوعي الها
+    // 1بقدر يسجل الطلاب ب الكلاس ،بس لازم يتأكد انو
+    // 1يدور على الكورسات المتاحة و يشوف المتطلبات و يسجل الطلاب ب الحصص بس لازم
+    // 1يتأكد انو الكرس ما بعتمد ع كورس مش مأخوذ
+    // 1 مدير التسجيل يدخل علامات الطلاب بالكورسات تاعونهم
+    // 1يتابع الحالة الاكاديمية للطالب و يقدم تقرير
+    // 1لازم يطلعلي الجدول و يتأكد انو نا في تضارب اضا في يحكي
+    // 1لازم بعض من الكلاسات يكونوا ثريد سيف
+    // 1ولازم نشرح الجي بي ا على الباررل كومبيوت و ع كمان ميثود
+    // 1اعمل تيست ل 13 ميثود  (13)
+    //

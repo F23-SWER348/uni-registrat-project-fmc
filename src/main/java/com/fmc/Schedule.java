@@ -17,7 +17,7 @@ Staff staff;
     public Schedule(Student student) {
         super();
 this.student=student;
-        this.stuORstaffCourse = student.StuCourse;
+        this.stuORstaffCourse = (ArrayList<Course>) student.getCourse();
     }
 
     public Schedule(Staff staff) {
@@ -35,6 +35,10 @@ this.staff=staff;
     // public void setTime(LocalDate time) {
     //     this.time = time;
     // }
+
+    public Staff getStaff() {
+        return staff;
+    }
 
     public ArrayList<Course> getCourse() {
         return ScheCourse;
