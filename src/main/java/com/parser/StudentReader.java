@@ -2,10 +2,12 @@ package com.parser;
 
 import java.io.FileReader;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.io.*;
 import java.util.*;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.json.simple.*;
 import org.json.simple.parser.*;
@@ -40,6 +42,9 @@ public class StudentReader {
     public ArrayList<Student> readStudent() {// بترجع و بتجيب اريي الطلاب وكمان كورسات الطالب والعلامات
         JSONParser parser = new JSONParser();
         // System.out.println("Student");
+         List<Course> CourseArr;
+              
+
         try {
             JSONArray a = (JSONArray) parser.parse(new FileReader(path));
             for (Object object : a) {
@@ -52,43 +57,77 @@ public class StudentReader {
                 Student student = new Student(name, id, contact);
 
                 if (studentObj.get("course") instanceof JSONArray) {
-                    ArrayList courseArray = (ArrayList) studentObj.get("course");
-                    for (int i = 0; i < courseArray.size(); i++) {
-                        String courseName = (String) courseArray.get(i);
+                    ArrayList CourseName = (ArrayList) studentObj.get("course");
+                //    ArrayList<Double> grade = (ArrayList<Double>) studentObj.get("gread");
+                //    Double removedGrade = grade.remove(0);
+                    CourseArr = (List<Course>) CourseName.stream()
+                    .map(courseName -> courses.stream()
+                        .filter(course -> course.getName().equals(courseName))
+                        .findFirst()
+                        .orElse(null))
+                    .filter(Objects::nonNull)
+                    .collect(Collectors.toList());    
+/////////////////////////////
+ 
+                  
+                    CourseArr.forEach(course -> {
+                      course.setStudent(student);
+                        // student.setGrade(course, removedGrade);
+                        // student.addCourse(course);
+                    }); 
+                           if (studentObj.get("gread") instanceof JSONArray) {
+                    ArrayList courseArray = (ArrayList) studentObj.get("gread");
+                 IntStream.range(0, courseArray.size())
+        .forEach(i -> {
+            double grade = Double.parseDouble((String) courseArray.get(i));
+            student.setGrade(courses.get(i), grade);
+        });}
+                
+                
+                }       
+             
+                                    //     System.out.println(student.getName()+"    "+student.getCourse().toString()+"\n");
+                                    //   System.out.println(student.getName()+"    "+student.GPA()+"\n");
 
-                        Course course = courses.stream().filter(e -> e.getName().equals(courseName)).findFirst().get();
-                        System.out.println(course);
+
+                                        // System.out.println(student.getCourse().toString());
+  students.add(student);}
+                    
+                    // courseArray.stream().map(e-> e.).forEach(e->System.out.println(e));
+    //    //  Course course =  courseArray.stream().forEach(e->courses.stream().filter(m -> m.getName().equals(e)).findFirst().get());
+    // List<Course> result = (List<Course>) courseArray.stream()
+    // .map(e -> courses.stream().filter(m -> m.getName().equals(e)).findFirst().orElse(null))
+    // .filter(Objects::nonNull) // للتخلص من العناصر الفارغة (null)
+    // .peek(course -> ((Course) course).setStudent(student)) // تعديل الطالب
+    // .collect(Collectors.toList());  
+    //   System.out.println(result.toString());
+                        // String courseName = (String) courseArray.get(i);
+
+                        // Course course = courses.stream().filter(e -> e.getName().equals(courseName)).findFirst().get();
+                        // System.out.println(course);
                                 // .collect(Collectors.toList()).get(0);
-                    course.setStudent(student);
+                    // course.setStudent(student);
 
                     // System.out.println(course.getStudent().isEmpty());
                     // System.out.println(student.getCourse().isEmpty());
-                        student.addCourse(course);// مش عارف اذا راح تزبط
+                        // student.addCourse(course);// مش عارف اذا راح تزبط
+ 
+               
+           
+                // }
 
-                    }
-                }
-                if (studentObj.get("gread") instanceof JSONArray) {
-                    ArrayList courseArray = (ArrayList) studentObj.get("gread");
-                    for (int i = 0; i < courseArray.size(); i++) {
-                        double grade = Double.parseDouble((String) courseArray.get(i));
-                        student.setGrade(courses.get(i), grade);
-
-                    }
-                }
-
-                students.add(student);
+                
 
                 // System.out.println( "student info"+student.StudentInfo());
                 // System.out.println("student course"+student.getCourse());
                 // System.out.println("student GPA"+student.GPA());
                 // System.out.println();
                 // System.out.println();
-            }
+          
         
         } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return students;
+            e.printStackTrace();}
+                return students;
     }
    Faculty faculty; Staff staff ; Semester semester;
 
@@ -108,6 +147,8 @@ public class StudentReader {
                 String staffName = (String) studentObj.get("staff");
                 String semesterName = (String) studentObj.get("semester");
                 String facultyName = (String) studentObj.get("faculty");
+                String start = (String) studentObj.get("start");
+                String day = (String) studentObj.get("day");
                 // Staff staff = new Staff(staffName, "", "0");
                 // Faculty faculty = new Faculty();
                 // faculty.setName(facultyName);
@@ -135,6 +176,15 @@ public class StudentReader {
             System.out.println("if you want to add a Faculty use the setFaculty method");
         }
          Course course = new Course(name, shortcut, credits, staff, semester, faculty);
+       
+         try {  course.setDay(day);
+                 LocalTime time =LocalTime.parse(start);
+                  course.setStart(time);
+         } catch (Exception e) {
+           System.out.println("there are few courses that dont have a time entered");
+         }
+    
+
          courses.add(course);
         // System.out.println(course.toString() + "\n\n");
       

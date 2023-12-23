@@ -97,10 +97,9 @@ public class StudentTest {
 
     String expected = "Student Name: mai      Student ID: 2021094423       Contact: fat@gmail      \r\n" + //
             "name----Credits----grade----Mark estimation\r\n" + //  
+               "math2------4--------3.5---------B+\r\n" + //
             "math3------3--------2.5---------C+\r\n" + //
-              "math2------4--------3.5---------B+\r\n" + //
-         
-            "GPA:3.0714285714285716Yourevaluation:Honor";
+          "GPA:3.0714285714285716Yourevaluation:Honor";
 
     @Test
     public void transcripts() {

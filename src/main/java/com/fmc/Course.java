@@ -3,6 +3,7 @@ package com.fmc;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.BlockingQueue;
@@ -22,12 +23,13 @@ public class Course extends user {// جربنا كل الميثود و نجحو�
 DayOfWeek day ;
 Course depend;
 private int Capacity;
+
     // private LocalDate day; مش كثير مفهومة
     // protected Map<Course, ArrayList<Student> > studentCourse = new HashMap<>();
     // //طلاب الكورس
 
     // ArrayList =new ArrayList<>();
-    public   BlockingQueue<Student> studentCourseArray = new LinkedBlockingQueue<>(30);
+     private  BlockingQueue<Student> studentCourseArray = new LinkedBlockingQueue<>(30);
 
    
 
@@ -133,7 +135,12 @@ private int Capacity;
     }
 
     public void setStart(LocalTime start) {
-        this.start = start;
+        try {
+             this.start = start;
+        } catch (Exception e) {
+           
+        }
+       
     }
 
     public LocalTime getEnd() {
@@ -148,8 +155,11 @@ private int Capacity;
     }
 
     public void setDay(String Day) {
-      
-      day=DayOfWeek.valueOf(Day.toUpperCase());
+      try {
+          day=DayOfWeek.valueOf(Day.toUpperCase());
+      } catch (Exception e) {
+    }
+    
     }
 
 
@@ -176,8 +186,7 @@ private int Capacity;
     }
 
     public  BlockingQueue<Student> getStudent() {///////////
-
-        return studentCourseArray;
+            return studentCourseArray;
     }
 
     
@@ -205,8 +214,8 @@ private int Capacity;
         } catch (Exception e) {
             e.printStackTrace();
         } // السعة تم حلها ب بلوكنج كيو
-    } 
-           return "Dear "+student.getName()+" you must take this course "+this.getDepend();}}
+    } }
+           return "Dear "+student.getName()+" you must take this course "+this.getDepend();}
        
  
 
@@ -216,11 +225,13 @@ private int Capacity;
         // int index = findIndex(studentCourseArray, studentToFind);
         // int index =studentCourseArray.indexOf(studentId);
         // this.studentCourseArray.take(student);//السعة
-        List<Student> stu = studentCourseArray.stream().filter(e -> e.getId() == studentId)
-                .collect(Collectors.toList());
-        stu.stream().map(e -> e.getCourse().remove(e));
-        this.studentCourseArray.removeIf(s -> s.getId() == studentId);
+    
+    List<Student> stu = studentCourseArray.stream()
+        .filter(e -> e.getId() == studentId)
+        .collect(Collectors.toList());
 
+stu.forEach(e -> e.getCourse().remove(this));
+        this.studentCourseArray.removeIf(s -> s.getId() == studentId);
         // student.course.remove(stu);
     }
     // اذا بنحب نعمل ابديت ستيودنت
