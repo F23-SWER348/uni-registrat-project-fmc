@@ -171,8 +171,7 @@ user user = new user();
    facultys.stream().forEach(e->System.out.println(e.getName()+"\n"+e.getCourse().toString()));
    System.out.println(" ");
 
-   course.stream().forEach(e ->{
-   System.out.print(e.getName() + " --> ");
+   course.stream().forEach(e ->{System.out.print(e.getName() + " --> ");
    e.getStudent().stream().forEach(m -> System.out.print(m.getName() + " "));
    System.out.println(); }
 );  
