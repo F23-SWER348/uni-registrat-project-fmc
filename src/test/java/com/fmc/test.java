@@ -1,6 +1,7 @@
 package com.fmc;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -83,16 +84,35 @@ ArrayList<Course> course = sr.readCourse();
      assertEquals(y.replaceAll("\\s", ""),  facultys.stream().map(e->e.getName()+"\n"+e.getCourse().toString()).collect(Collectors.toList()).toString().replaceAll("\\s", ""));
  }
 
-//  String c="math --> Mai Celina Fatma swer --> Mai Celina Fatma history -->swerOS --> Mai Celina";
+ String c="[Mai    StudentName:Mai  StudentID:1      Contact:234234     GPA:2.75,              Celina   StudentName:Celina        StudentID:2          Contact:20219356        GPA:2.35,        Fatma               StudentName:Fatma         StudentID:3       Contact:5464564       GPA:2.4285714285714284]";
 
-//      String f ;
-     
-//     // course.stream().map(e ->e.getName() + " --> "+e.getStudent().stream().map(m -> m.getName().collect(Collectors.toList()).toString()));  
-//      course.stream().map(e -> e.getName() + " --> " + e.getStudent().stream().map(m -> m.getName()).collect(Collectors.joining(", "))) .collect(Collectors.toList());
+ @Test
+    public void infoStudent() {
+        assertEquals(c .replaceAll("\\s", ""),student.stream().map(e->e.getName()+"  "+ e.StudentInfo()).collect(Collectors.toList()).toString().replaceAll("\\s", ""));
+    }
+
+
+// student.stream().filter(e->e.getName(Celina)).map(e->e.remove)
+
 
 //  @Test
-//     public void courseStudent() {
-//         assertEquals(c .replaceAll("\\s", ""), .collect(Collectors.toList()).toString().replaceAll("\\s", ""));
+//     public void getremoveCoursefromStudent() {
+//         assertNotEquals("swer",);
 //     }
 
+    @Test
+    public void staffconflect() {
+        assertEquals("[true,false,true]", staffs.stream().map(e->new Schedule(e).conflect()).collect(Collectors.toList()).toString().replaceAll("\\s", ""));
+    }
+
+
+ @Test
+    public void StudentSh() {
+        assertEquals("[enterthetimeofeachcourse,enterthetimeofeachcourse,enterthetimeofeachcourse]", student.stream().map(e->new Schedule(e)).map(x->
+        x.toStringStu()).collect(Collectors.toList()).toString().replaceAll("\\s", ""));
+    }
+   @Test
+    public void studentconflect() {
+        assertEquals("[true,true,true]", student.stream().map(e->new Schedule(e).conflect()).collect(Collectors.toList()).toString().replaceAll("\\s", ""));
+    }
 }
