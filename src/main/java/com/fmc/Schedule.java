@@ -59,26 +59,23 @@ this.staff=staff;
     // public void setFaculty(Faculty faculty) {
     // this.faculty = faculty;
     // }
-
+// هان بشوف اذا في عندي تضارب يعني 
     public boolean conflect() {
-        // CourseList.stream().reduce((e1,e2)->e1.getStart()!=null&&e2.getStart()!=null&&
-        // !e1.getStart().isAfter(e2.getStart().plusHours(1)) &&
-        // !e1.getStart().plusHours(1).isBefore(e2.getStart()));
-        // return false;
-
+      
+// اول اشي جبت كورسات الطالب او الاستاذ الي بدي اشوف اذا عنده تضارب بعدين بشوف اذا معين اله وقت بعدين جبت الكورس الثاني و شفت اذا معين اله وقت 
+// وبعدين بفحص الاوقات يعني اذا الاول بخلص قبل ما تبلش الثانية و اذا الثاني ببلش قبل ما تخلص الاولى 
         boolean noConflict = stuORstaffCourse.stream()
                 .allMatch(course1 -> course1.getStart() != null &&
                         stuORstaffCourse.stream()
                                 .filter(course2 -> course2.getStart() != null)
                                 .noneMatch(course2 -> !course1.equals(course2) &&
                                         !course1.getStart().isAfter(course2.getEnd()) &&
-                                        !course1.getEnd().isBefore(course2.getStart())&&course1.getDay()==course2.getDay()));
-
-       
+                                        !course1.getEnd().isBefore(course2.getStart())&&course1.getDay()==course2.getDay()));       
         return !noConflict;
     }
 
-    
+//    طبعنا جدول الطالب 
+
     public String toStringStu() {
         try{
         StringBuilder sb = new StringBuilder();
@@ -97,7 +94,7 @@ this.staff=staff;
         return sb.append("schedule have a conflect ? "+this.conflect()+"\n").toString();
     }catch(Exception s){return"enter the time of each course ";}
     }
-     
+    //  طبعنا جدول المعلم
     public String toStringStaff() {
         try{
         StringBuilder sb = new StringBuilder();

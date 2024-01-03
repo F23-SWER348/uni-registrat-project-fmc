@@ -32,7 +32,7 @@ private int Capacity;
      private  BlockingQueue<Student> studentCourseArray = new LinkedBlockingQueue<>(30);
 
    
-
+// كونستركتر 
     public Course(String name, String shortcut, int credits, Staff staff, Semester semester, Faculty faculty) {
         super();
         this.name = name;
@@ -51,6 +51,7 @@ private int Capacity;
         faculty.facultyCourseArray.add(this);
         user.FacultyCourse.put(faculty, faculty.facultyCourseArray);
     }  
+    // كونستركتر اذا في للكورس بري كورس
      public Course(String name, String shortcut, int credits, Staff staff, Semester semester, Faculty faculty,Course course) {
         super();
         this.name = name;
@@ -67,7 +68,7 @@ private int Capacity;
         user.FacultyCourse.put(faculty, faculty.facultyCourseArray);
         this.depend=course;
     }
-
+// كونستركتر اذا لسا ما تحدد اله معلم للكورس 
     public Course(String name, String shortcut, int credits, Semester semester, Faculty faculty) {
         super();
       user.   CourseList.add(this);
@@ -84,6 +85,7 @@ private int Capacity;
         // this.studentCourse.put(this, studentCourseArray);//موقعها غلط
 
     }
+    // كونستركتر اذا ما في اي معلومة عن الكورس وانا بدي ادخلهم يدوي 
  public Course() {
     };
     public String getName() {
@@ -110,7 +112,7 @@ private int Capacity;
     public void setShortcut(String shortcut) {
         this.shortcut = shortcut;
     }
-
+// اشوف شو علامة المادة ب الرموز 
     public String gradeABC(Double grade) {
 
         return grade == 4 ? "A"
@@ -194,6 +196,7 @@ private int Capacity;
 
     //     return studentCourseArray.stream().filter(e->e.getName().equals(this.getName())).collect(Collectors.toList());
     // }
+    // بضيف طالب على الكورس اذا ماخذ المواد المعتمدة على هاد الكورس 
     public String setStudent(Student student) {
         if (this.depend==null){
          studentCourseArray.offer(student);
@@ -203,10 +206,11 @@ private int Capacity;
 
         }
         else{
+            // هان جبنا كورسات الطالب وفتشنا اذا اخذ المادة المعتمدة على هاد الكورس او لا و عملنا كاونت اذا كان الكاونت واحد يعني اخذها اذا صفر يعني لا
         int x=  (int) student.getCourse().stream().filter(e->e.equals(this.getDepend())).count();
     
-            if (x==1){
-        try {
+            if (x>=1){
+        try {//هان بعد ما اتأكدت انو اخذها ضفته على هاد الكورس 
             studentCourseArray.offer(student);
             student.addCourse(this); 
               Capacity++;
@@ -215,6 +219,7 @@ private int Capacity;
             e.printStackTrace();
         } // السعة تم حلها ب بلوكنج كيو
     } }
+    // اذا مش ماخذها بطلعله هاد المسج 
            return "Dear "+student.getName()+" you must take this course "+this.getDepend();}
        
  
@@ -238,6 +243,7 @@ stu.forEach(e -> e.getCourse().remove(this));
 // public void printAllCourse(){
 //       CourseList.stream().forEach(e->System.out.println(e.getStudent().size()));;
 // }
+// بطبع الكورس مع طلابه 
     public String toStringWithStudent() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Course Name: ").append(name).append("\n");
@@ -253,7 +259,7 @@ stu.forEach(e -> e.getCourse().remove(this));
 
         return stringBuilder.toString();
     }
-
+// بطبع معلومات الكورس
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();

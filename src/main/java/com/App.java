@@ -29,8 +29,10 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+
 public class App {
    public static Student FatmaStu = new Student("fatma", 202109442, "fat@gmail");
+   
   public static void main(String[] args) {
 user user = new user();
     System.out.println("read from file and return the info in array list ");
@@ -86,7 +88,7 @@ user user = new user();
      System.out.println(math2.setStudent(FatmaStu));
 
 
-    math1.setStart(LocalTime.of(8, 30, 0));
+    math1.setStart(LocalTime.of(10, 30, 0));
    math1.setDay("monday");
     math2.setStart(LocalTime.of(8, 30, 0));
     math2.setDay("monday");
