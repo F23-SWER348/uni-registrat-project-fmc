@@ -111,22 +111,23 @@ public class Student extends Grade {
     // studentCourse.get(course).add(this);
 
     // }
+    // /جبنا علاماته 
     public Double getGrade(Course course) {
         return this.grade.get(course);
 
     }
-
+// حطينا علامة اله
     public void setGrade(Course c, Double b) {
         this.grade.put(c, b);
     }
-
+// حسبت معدل الطالب 
     public Double GPA() {
         List<Double> gradeStu = grade.values().stream().collect(Collectors.toList()); // طلت العلامات
         List<Course> courseStu = grade.keySet().stream().collect(Collectors.toList()); // طلت الكورسات
 
         // حسبت مجموع (علامة × عدد الساعات)
         final int[] totalCredits = { 0 };
-
+// بطول عنصر عصر بجيت فيرست و بطول العلامة و بجمع الساعات و بضرب العلامة و بعدد الساعات تاعت المادة و بعمل مجموعهم 
         double weightedPoints = IntStream.range(0, Math.min(courseStu.size(), grade.size()))
                 .mapToDouble(i -> {
                     Course course = courseStu.stream().skip(i).findFirst().orElse(null);
@@ -134,20 +135,22 @@ public class Student extends Grade {
                     totalCredits[0] += course.getCredits();
                     return gradeValue * course.getCredits();
                 }).sum();
-
+                 // هان عملنا parallel  عشان اعمل المعدل ب هاي الطريقة اني اقسم و اجمع 
         RecursiveTask rAction=new AssTask(gradeStu,courseStu,0,gradeStu.size());
           ForkJoinPool pool=new ForkJoinPool();
           double result = (double) pool.invoke(rAction);
     //     this.gpa = weightedPoints / totalCredits[0];
     //    weightedPoints / totalCredits[0];
- 
+
+                // عشان ما اخليه يحسب التقدير قبل ما يحسب المعدل 
+
     lock.lock();
   
 EvaluationAwaite.signal();
 lock.unlock();
  return  result/ totalCredits[0];
     }
-
+// هان حسبت التقدير و ما بزبط احسبه اذا ما في معدل 
     public String evaluation(Double GPA) throws InterruptedException {
         lock.lock();
         if (this.GPA()==0)       {
@@ -158,7 +161,7 @@ lock.unlock();
         return s;
           
     }
-
+// طبعت معلومات الطالب
     public String StudentInfo() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Student Name: ").append(this.name).append("\n");
@@ -168,7 +171,7 @@ lock.unlock();
 
         return stringBuilder.toString();
     }
-
+// طبعت كشف علامات الطالب 
     public StringBuilder StudentTranscripts() throws InterruptedException {
         Collection<Double> gradeStu = grade.values(); // طلت العلامات
         Collection<Course> courseStu = grade.keySet(); // طلت الكورسات
@@ -196,23 +199,24 @@ lock.unlock();
         return stringBuilder;
 
     }
+    // كلاس تاسك ابن ل ريكيرسف تاسك عشان بجي اياه يرجع 
 public class AssTask extends RecursiveTask<Double> {
     List<Double> arr;
     List<Course> courseStu;
     int low;
     int high;
     int capacity = 1000;
-
+// هان جبت ارري العلامات و جبت ارري عدد الساعات 
     public AssTask(List<Double> gradeStu,List<Course> courseStu, int low, int high) {
         this.arr = gradeStu;
         this.low = low;
         this.high = high;
         this.courseStu=courseStu;
     }
-
+//  هان بدي اضل اقسم و لما يصير  الحجم صغير بضرب العلامة و ب عدد ساعاتها
     @Override
     protected Double compute() {
-        if (high - low < 1000) {
+        if (high - low < 5) {
             double sum = 0;
             for (int i = low; i < high; i++) {
                 // sum+=arr[i];
@@ -220,6 +224,7 @@ public class AssTask extends RecursiveTask<Double> {
             }
             return sum;
         } else {
+            // برجع اقسم 
             int mid = (high + low) / 2;
             AssTask left = new AssTask(arr,courseStu, low, mid);
             AssTask right = new AssTask(arr,courseStu, mid, high);

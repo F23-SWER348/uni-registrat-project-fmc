@@ -48,7 +48,7 @@ public class Staff extends Student {
         // st.stream().filter(e->e.getStaff().equals(this)).collect(Collectors.toList());
         // (ArrayList<Course>) getCourses;
     }
-
+// اعطي كورس للمعلم
     public void setCourse(Course course) {
         ArrayList<Course> temp = staffCourse.get(this);
         temp.add(course);
@@ -70,7 +70,7 @@ public class Staff extends Student {
     // }
 
     // }
-
+// اجيب كورسات المعلم
     public ArrayList<Course> getCourse() {
         return staffCourseArray;
     }

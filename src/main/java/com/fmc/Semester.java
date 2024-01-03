@@ -60,7 +60,7 @@ public class Semester extends Course {
     public void setEnd(LocalDate end) {
         this.end = end;
     }
-
+// اجيب كورسات الفثل 
     public ArrayList<Course> getCourse() {
         if (semesterCourse.get(this)==null) 
         System.out.println("this semester have not  any course");
@@ -68,7 +68,7 @@ public class Semester extends Course {
 
     }
 
-
+// احطله كورس
     public void createNewCourseinSemester(String name, String shortcut, int credits, Faculty faculty) {
 
         Course course = new Course(name, shortcut, credits, this, faculty);
@@ -76,19 +76,19 @@ public class Semester extends Course {
         this.semesterCourse.put(this, c);
      
     }
-
+// احذف كورس من هاد الفصل
     public void removeCourse(Course course) {
         this.c.remove(course);
 
     }
-
+// احذف كورس باستخدام اسم الكورس
     public void removeCourse(String Namecourse) {
 
         List<String> removes = this.c.stream().map(e -> e.getName().toLowerCase())
                 .filter(e -> e.equals(Namecourse.toLowerCase())).collect(Collectors.toList());
-        this.c.remove(removes);// اتأكد اذا هي شغالةة
+        this.c.remove(removes);
     }
-
+// اطبع معلومات الفصل
     @Override
     public String toString() {
         

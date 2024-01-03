@@ -1,11 +1,15 @@
 package com.fmc;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
+
+import org.json.simple.JSONArray;
 
 public class user {
     //مش حاس اله فايدة هاد الكلاس
@@ -31,12 +35,11 @@ public static Map<Student, ArrayList<Course>> getCourseStudent() {
 public static Map<Faculty, ArrayList<Course>> getFacultyCourse() {
     return FacultyCourse;
 }
-
+// هاي بتطبع الكورسات المتاحة 
 public  String AvaliableCourses() {
 
   CourseList.stream().distinct() .map(e->e.getStudent().size()<29 ?  e.getName():null).filter( m->m!=null).forEach(e->System.out.println(e));
        return "";}
-
 
 
 }
