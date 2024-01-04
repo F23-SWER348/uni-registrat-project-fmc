@@ -11,7 +11,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.stream.Collectors;
 
 public class Course extends user {// We tried all the methods, and they succeeded.
-    // mai
+  
     private String name;
     private String shortcut;
     private int credits;
