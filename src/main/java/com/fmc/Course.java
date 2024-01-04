@@ -10,7 +10,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.stream.Collectors;
 
-public class Course extends user {// جربنا كل الميثود و نجحوا
+public class Course extends user {// We tried all the methods, and they succeeded.
     // mai
     private String name;
     private String shortcut;
@@ -24,15 +24,13 @@ DayOfWeek day ;
 Course depend;
 private int Capacity;
 
-    // private LocalDate day; مش كثير مفهومة
-    // protected Map<Course, ArrayList<Student> > studentCourse = new HashMap<>();
-    // //طلاب الكورس
+ 
 
-    // ArrayList =new ArrayList<>();
+   
      private  BlockingQueue<Student> studentCourseArray = new LinkedBlockingQueue<>(30);
 
    
-// كونستركتر 
+// Constructor 
     public Course(String name, String shortcut, int credits, Staff staff, Semester semester, Faculty faculty) {
         super();
         this.name = name;
@@ -45,13 +43,13 @@ private int Capacity;
         user.staffCourse.put(staff, staff.staffCourseArray);
         semester.c.add(this);
         user.semesterCourse.put(semester, semester.c);
-        // this.studentCourse.put(this, studentCourseArray);//موقعها غلط
+        
        
 
         faculty.facultyCourseArray.add(this);
         user.FacultyCourse.put(faculty, faculty.facultyCourseArray);
     }  
-    // كونستركتر اذا في للكورس بري كورس
+    // Constructor if in the pre-course course
      public Course(String name, String shortcut, int credits, Staff staff, Semester semester, Faculty faculty,Course course) {
         super();
         this.name = name;
@@ -68,7 +66,7 @@ private int Capacity;
         user.FacultyCourse.put(faculty, faculty.facultyCourseArray);
         this.depend=course;
     }
-// كونستركتر اذا لسا ما تحدد اله معلم للكورس 
+// Constructor if you have not yet specified a teacher for the course
     public Course(String name, String shortcut, int credits, Semester semester, Faculty faculty) {
         super();
       user.   CourseList.add(this);
@@ -82,10 +80,10 @@ private int Capacity;
 
         staff.staffCourseArray.add(this);
         user.staffCourse.put(staff, staff.staffCourseArray);
-        // this.studentCourse.put(this, studentCourseArray);//موقعها غلط
+        
 
     }
-    // كونستركتر اذا ما في اي معلومة عن الكورس وانا بدي ادخلهم يدوي 
+    // Constructor if there is no information about the course and I want to enter them manually
  public Course() {
     };
     public String getName() {
@@ -112,7 +110,7 @@ private int Capacity;
     public void setShortcut(String shortcut) {
         this.shortcut = shortcut;
     }
-// اشوف شو علامة المادة ب الرموز 
+//Find out what is the sign of the material using symbols
     public String gradeABC(Double grade) {
 
         return grade == 4 ? "A"
@@ -196,7 +194,7 @@ private int Capacity;
 
     //     return studentCourseArray.stream().filter(e->e.getName().equals(this.getName())).collect(Collectors.toList());
     // }
-    // بضيف طالب على الكورس اذا ماخذ المواد المعتمدة على هاد الكورس 
+    // I will add a student to the course if he takes the materials approved for this course
     public String setStudent(Student student) {
         if (this.depend==null){
          studentCourseArray.offer(student);
@@ -206,30 +204,29 @@ private int Capacity;
 
         }
         else{
-            // هان جبنا كورسات الطالب وفتشنا اذا اخذ المادة المعتمدة على هاد الكورس او لا و عملنا كاونت اذا كان الكاونت واحد يعني اخذها اذا صفر يعني لا
-        int x=  (int) student.getCourse().stream().filter(e->e.equals(this.getDepend())).count();
+                //Here, we took the student’s courses and checked whether he took the material based on this course or not, and we made a tally. If the count was one, it means he took it, and if it was zero, it means no.
+            int x=  (int) student.getCourse().stream().filter(e->e.equals(this.getDepend())).count();
     
             if (x>=1){
-        try {//هان بعد ما اتأكدت انو اخذها ضفته على هاد الكورس 
+        try {// Here, after I made sure that I took it, I added it to this course
             studentCourseArray.offer(student);
             student.addCourse(this); 
               Capacity++;
         return "Dear "+student.getName()+" Done";
         } catch (Exception e) {
             e.printStackTrace();
-        } // السعة تم حلها ب بلوكنج كيو
+        } // The capacity is solved with BlockingQ
     } }
-    // اذا مش ماخذها بطلعله هاد المسج 
+    // If I don't take it, I will get this message
            return "Dear "+student.getName()+" you must take this course "+this.getDepend();}
        
  
 
-    public void removeStudent(int studentId) {// اول اشي عملت جبنا الكيو طلعنا منها الستيودنت الي اي دي تاعهم نفس الاي
-                                              // دي الي عندي بعدين بالماب حذفتهم جبت كل واحد اله نفس الايديي و مستحت
-                                              // الطالب من هاد الكورس من كورسات الطالب و بعدها مسحت الطالب من هاد الكورس
+    public void removeStudent(int studentId) { 
+       //The first thing I did was get the Q. We took out the student whose ID had the same ID as the one I had. Then I deleted them. I took each one with the same ID and deleted the student from this course from the student courses, and then I deleted the student from this course.
         // int index = findIndex(studentCourseArray, studentToFind);
         // int index =studentCourseArray.indexOf(studentId);
-        // this.studentCourseArray.take(student);//السعة
+        // this.studentCourseArray.take(student);//Capasity
     
     List<Student> stu = studentCourseArray.stream()
         .filter(e -> e.getId() == studentId)
@@ -239,11 +236,11 @@ stu.forEach(e -> e.getCourse().remove(this));
         this.studentCourseArray.removeIf(s -> s.getId() == studentId);
         // student.course.remove(stu);
     }
-    // اذا بنحب نعمل ابديت ستيودنت
+    // If we would like to update, start as a student
 // public void printAllCourse(){
 //       CourseList.stream().forEach(e->System.out.println(e.getStudent().size()));;
 // }
-// بطبع الكورس مع طلابه 
+// print the course with it's Students
     public String toStringWithStudent() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Course Name: ").append(name).append("\n");
@@ -259,7 +256,7 @@ stu.forEach(e -> e.getCourse().remove(this));
 
         return stringBuilder.toString();
     }
-// بطبع معلومات الكورس
+// print the information of the course
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();

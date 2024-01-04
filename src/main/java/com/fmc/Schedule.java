@@ -13,7 +13,7 @@ public class Schedule extends Student {
     ArrayList<Course> stuORstaffCourse;
     Student student;
 Staff staff;
-    // الاريي تاعت كورسات الستيودنت راح نقرأها من فايل
+    // the course's array will read here from file
     public Schedule(Student student) {
         super();
 this.student=student;
@@ -59,11 +59,10 @@ this.staff=staff;
     // public void setFaculty(Faculty faculty) {
     // this.faculty = faculty;
     // }
-// هان بشوف اذا في عندي تضارب يعني 
+// here i check if there is conflict or not
     public boolean conflect() {
       
-// اول اشي جبت كورسات الطالب او الاستاذ الي بدي اشوف اذا عنده تضارب بعدين بشوف اذا معين اله وقت بعدين جبت الكورس الثاني و شفت اذا معين اله وقت 
-// وبعدين بفحص الاوقات يعني اذا الاول بخلص قبل ما تبلش الثانية و اذا الثاني ببلش قبل ما تخلص الاولى 
+// First, I took the courses for the student or professor I wanted to see if he had a conflict. Then I looked to see if he had a set time. Then I took the second course and saw if he had a set time. Then I checked the times, meaning if the first ends before the second starts, and if the second starts before the first finishes.
         boolean noConflict = stuORstaffCourse.stream()
                 .allMatch(course1 -> course1.getStart() != null &&
                         stuORstaffCourse.stream()
@@ -74,7 +73,7 @@ this.staff=staff;
         return !noConflict;
     }
 
-//    طبعنا جدول الطالب 
+//    printed the student schedule
 
     public String toStringStu() {
         try{
@@ -94,7 +93,7 @@ this.staff=staff;
         return sb.append("schedule have a conflect ? "+this.conflect()+"\n").toString();
     }catch(Exception s){return"enter the time of each course ";}
     }
-    //  طبعنا جدول المعلم
+    //  printed the teacher's schedule
     public String toStringStaff() {
         try{
         StringBuilder sb = new StringBuilder();
