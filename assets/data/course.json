@@ -1,46 +1,83 @@
-[
-    {
-        "name": "math", 
-        "shortcut": "math1",
-        "credits": 4,
-        "staff":"MB",
-        "semester":"fall2023",
-        "faculty":"science"
-     
-        
-    },
-    {
-        "name": "swer", 
-        "shortcut": "swer1",
-        "credits": 3,
-        "staff":"FQ",
-        "semester":"fall2023",
-        "faculty":"science",
-        "start": "10:30:00",
-        "day": "tuesday"
-        
-    },
-    {
-        "name": "history", 
-        "shortcut": "hist1",
-        "credits": 3,
-        "staff":"JG",
-        "semester":"spring2023",
-        "faculty":"Art",
-        "start": "10:30:00",
-        "day": "tuesday"
-        
-    },
-    {
-        "name": "swerOS", 
-        "shortcut": "swer2",
-        "credits": 3,
-        "staff":"FQ",
-        "semester":"fall2023",
-        "faculty":"science",
-        "start": "10:30:00",
-        "day": "tuesday"
-       
-        
-    }
-]
+[ {
+  "name" : "math",
+  "shortcut" : "math1",
+  "credits" : 4,
+  "staff" : "MB",
+  "semester" : "fall2023",
+  "faculty" : "science"
+}, {
+  "name" : "swer",
+  "shortcut" : "swer1",
+  "credits" : 3,
+  "staff" : "FQ",
+  "semester" : "fall2023",
+  "faculty" : "science",
+  "start" : "10:30:00",
+  "day" : "tuesday"
+}, {
+  "name" : "history",
+  "shortcut" : "hist1",
+  "credits" : 3,
+  "staff" : "JG",
+  "semester" : "spring2023",
+  "faculty" : "Art",
+  "start" : "10:30:00",
+  "day" : "tuesday"
+}, {
+  "name" : "swerOS",
+  "shortcut" : "swer2",
+  "credits" : 3,
+  "staff" : "FQ",
+  "semester" : "fall2023",
+  "faculty" : "science",
+  "start" : "10:30:00",
+  "day" : "tuesday"
+}, {
+  "name" : "Math1",
+  "shortcut" : "math131",
+  "credits" : "4",
+  "staff" : "fatma",
+  "semester" : ""
+}, {
+  "name" : "Math2",
+  "shortcut" : "math132",
+  "credits" : "4",
+  "staff" : "fatma",
+  "semester" : ""
+}, {
+  "name" : "Math4",
+  "shortcut" : "math134",
+  "credits" : "3",
+  "staff" : "Mai",
+  "semester" : ""
+}, {
+  "name" : "Math6",
+  "shortcut" : "math136",
+  "credits" : "3",
+  "staff" : "Mai",
+  "semester" : ""
+}, {
+  "name" : "Math1",
+  "shortcut" : "math131",
+  "credits" : "4",
+  "staff" : "fatma",
+  "semester" : ""
+}, {
+  "name" : "Math2",
+  "shortcut" : "math132",
+  "credits" : "4",
+  "staff" : "fatma",
+  "semester" : ""
+}, {
+  "name" : "Math4",
+  "shortcut" : "math134",
+  "credits" : "3",
+  "staff" : "Mai",
+  "semester" : ""
+}, {
+  "name" : "Math6",
+  "shortcut" : "math136",
+  "credits" : "3",
+  "staff" : "Mai",
+  "semester" : ""
+} ]

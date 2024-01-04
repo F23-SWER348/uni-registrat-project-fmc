@@ -18,10 +18,13 @@ public class user {
      static Map<Staff, ArrayList<Course> > staffCourse = new HashMap<>();
     static Map<Student, ArrayList<Course> > courseStudent = new HashMap<>(); //كورسات الطالب 
    static  Map<Faculty, ArrayList<Course> > FacultyCourse = new HashMap<>();
-    static ArrayList<Course> CourseList=new ArrayList<>();;
+    public static ArrayList<Course> CourseList=new ArrayList<>();;
 
    public static Map<Semester, ArrayList<Course>> getSemesterCourse() {
     return semesterCourse;
+}
+   public static List<String> getAllCourse() {
+    return CourseList.stream().map(e->e.getName()).distinct().collect(Collectors.toList());
 }
 
 public static Map<Staff, ArrayList<Course>> getStaffCourse() {

@@ -1,5 +1,6 @@
 package com.fmc;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -10,22 +11,23 @@ import java.util.concurrent.RecursiveTask;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import com.fmc.Student.AssTask;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.parser.JSONWriter;
 
 public class Student extends Grade {
- static Lock lock=new ReentrantLock();
-  static  Condition EvaluationAwaite= lock.newCondition();
+    static Lock lock = new ReentrantLock();
+    static Condition EvaluationAwaite = lock.newCondition();
     private String name;
     private int id;
     private String contact;
     private double gpa;
     Map<Course, Double> grade = new HashMap<>();
     private Faculty faculty;
-  ArrayList<Course> StuCourse = new ArrayList<>();
+    ArrayList<Course> StuCourse = new ArrayList<>();
 
     public Student() {
     };
@@ -53,7 +55,7 @@ public class Student extends Grade {
 
     public List<Course> getCourse() {
         if (this.StuCourse.isEmpty())
-        System.out.println(this.name +"  dont have any course");
+            System.out.println(this.name + "  dont have any course");
         return this.StuCourse;
     }
 
@@ -111,23 +113,26 @@ public class Student extends Grade {
     // studentCourse.get(course).add(this);
 
     // }
-    // /جبنا علاماته 
+    // /جبنا علاماته
     public Double getGrade(Course course) {
         return this.grade.get(course);
 
     }
-// حطينا علامة اله
+
+    // حطينا علامة اله
     public void setGrade(Course c, Double b) {
         this.grade.put(c, b);
     }
-// حسبت معدل الطالب 
+
+    // حسبت معدل الطالب
     public Double GPA() {
         List<Double> gradeStu = grade.values().stream().collect(Collectors.toList()); // طلت العلامات
         List<Course> courseStu = grade.keySet().stream().collect(Collectors.toList()); // طلت الكورسات
 
         // حسبت مجموع (علامة × عدد الساعات)
         final int[] totalCredits = { 0 };
-// بطول عنصر عصر بجيت فيرست و بطول العلامة و بجمع الساعات و بضرب العلامة و بعدد الساعات تاعت المادة و بعمل مجموعهم 
+        // بطول عنصر عصر بجيت فيرست و بطول العلامة و بجمع الساعات و بضرب العلامة و بعدد
+        // الساعات تاعت المادة و بعمل مجموعهم
         double weightedPoints = IntStream.range(0, Math.min(courseStu.size(), grade.size()))
                 .mapToDouble(i -> {
                     Course course = courseStu.stream().skip(i).findFirst().orElse(null);
@@ -135,33 +140,36 @@ public class Student extends Grade {
                     totalCredits[0] += course.getCredits();
                     return gradeValue * course.getCredits();
                 }).sum();
-                 // هان عملنا parallel  عشان اعمل المعدل ب هاي الطريقة اني اقسم و اجمع 
-        RecursiveTask rAction=new AssTask(gradeStu,courseStu,0,gradeStu.size());
-          ForkJoinPool pool=new ForkJoinPool();
-          double result = (double) pool.invoke(rAction);
-    //     this.gpa = weightedPoints / totalCredits[0];
-    //    weightedPoints / totalCredits[0];
+        // هان عملنا parallel عشان اعمل المعدل ب هاي الطريقة اني اقسم و اجمع
+        RecursiveTask rAction = new AssTask(gradeStu, courseStu, 0, gradeStu.size());
+        ForkJoinPool pool = new ForkJoinPool();
+        double result = (double) pool.invoke(rAction);
+        // this.gpa = weightedPoints / totalCredits[0];
+        // weightedPoints / totalCredits[0];
 
-                // عشان ما اخليه يحسب التقدير قبل ما يحسب المعدل 
+        // عشان ما اخليه يحسب التقدير قبل ما يحسب المعدل
 
-    lock.lock();
-  
-EvaluationAwaite.signal();
-lock.unlock();
- return  result/ totalCredits[0];
+        lock.lock();
+
+        EvaluationAwaite.signal();
+        lock.unlock();
+        return result / totalCredits[0];
     }
-// هان حسبت التقدير و ما بزبط احسبه اذا ما في معدل 
+
+    // هان حسبت التقدير و ما بزبط احسبه اذا ما في معدل
     public String evaluation(Double GPA) throws InterruptedException {
         lock.lock();
-        if (this.GPA()==0)       {
+        if (this.GPA() == 0) {
             EvaluationAwaite.await();
-             } 
-             String s= GPA == 4 ? "Heighest Honor" : GPA >= 3.5 ? "Deans" : GPA >= 3 ? "Honor" : GPA <= 1.5 ? "Probation" : "";
-             lock.unlock();
+        }
+        String s = GPA == 4 ? "Heighest Honor"
+                : GPA >= 3.5 ? "Deans" : GPA >= 3 ? "Honor" : GPA <= 1.5 ? "Probation" : "";
+        lock.unlock();
         return s;
-          
+
     }
-// طبعت معلومات الطالب
+
+    // طبعت معلومات الطالب
     public String StudentInfo() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Student Name: ").append(this.name).append("\n");
@@ -171,7 +179,8 @@ lock.unlock();
 
         return stringBuilder.toString();
     }
-// طبعت كشف علامات الطالب 
+
+    // طبعت كشف علامات الطالب
     public StringBuilder StudentTranscripts() throws InterruptedException {
         Collection<Double> gradeStu = grade.values(); // طلت العلامات
         Collection<Course> courseStu = grade.keySet(); // طلت الكورسات
@@ -188,48 +197,92 @@ lock.unlock();
                     Double gradeValue = grade.values().stream().skip(i).findFirst().orElse(0.0);
                     totalCredits[0] += course.getCredits();
                     // return gradeValue * course.getCredits();
-                    stringBuilder.append(course.getName() + "------" +course.getCredits() + "--------" + gradeValue 
+                    stringBuilder.append(course.getName() + "------" + course.getCredits() + "--------" + gradeValue
                             + "---------" + course.gradeABC(gradeValue) + "\n");
 
                 });
-                
 
         stringBuilder.append("GPA: " + this.GPA());
         stringBuilder.append("Your evaluation :" + this.evaluation(GPA()) + "\n");
         return stringBuilder;
 
     }
-    // كلاس تاسك ابن ل ريكيرسف تاسك عشان بجي اياه يرجع 
-public class AssTask extends RecursiveTask<Double> {
-    List<Double> arr;
-    List<Course> courseStu;
-    int low;
-    int high;
-    int capacity = 1000;
-// هان جبت ارري العلامات و جبت ارري عدد الساعات 
-    public AssTask(List<Double> gradeStu,List<Course> courseStu, int low, int high) {
-        this.arr = gradeStu;
-        this.low = low;
-        this.high = high;
-        this.courseStu=courseStu;
-    }
-//  هان بدي اضل اقسم و لما يصير  الحجم صغير بضرب العلامة و ب عدد ساعاتها
-    @Override
-    protected Double compute() {
-        if (high - low < 5) {
-            double sum = 0;
-            for (int i = low; i < high; i++) {
-                // sum+=arr[i];
-                sum += arr.get(i).doubleValue()*courseStu.get(i).getCredits();
-            }
-            return sum;
-        } else {
-            // برجع اقسم 
-            int mid = (high + low) / 2;
-            AssTask left = new AssTask(arr,courseStu, low, mid);
-            AssTask right = new AssTask(arr,courseStu, mid, high);
-            left.fork();
-            right.fork();
-            return left.join() + right.join();
+
+    // كلاس تاسك ابن ل ريكيرسف تاسك عشان بجي اياه يرجع
+    public class AssTask extends RecursiveTask<Double> {
+        List<Double> arr;
+        List<Course> courseStu;
+        int low;
+        int high;
+        int capacity = 1000;
+
+        // هان جبت ارري العلامات و جبت ارري عدد الساعات
+        public AssTask(List<Double> gradeStu, List<Course> courseStu, int low, int high) {
+            this.arr = gradeStu;
+            this.low = low;
+            this.high = high;
+            this.courseStu = courseStu;
         }
-    }}}
+
+        // هان بدي اضل اقسم و لما يصير الحجم صغير بضرب العلامة و ب عدد ساعاتها
+        @Override
+        protected Double compute() {
+            if (high - low < 5) {
+                double sum = 0;
+                for (int i = low; i < high; i++) {
+                    // sum+=arr[i];
+                    sum += arr.get(i).doubleValue() * courseStu.get(i).getCredits();
+                }
+                return sum;
+            } else {
+                // برجع اقسم
+                int mid = (high + low) / 2;
+                AssTask left = new AssTask(arr, courseStu, low, mid);
+                AssTask right = new AssTask(arr, courseStu, mid, high);
+                left.fork();
+                right.fork();
+                return left.join() + right.join();
+            }
+        }
+
+        public JsonNode jsonify_object() throws Exception {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append("{")
+                    .append("\"name\": \"").append(escapeJsonString(name))
+                    // .append("\",")
+                    // ToDo: Write the other attibutes for this class...
+                    // See Course.java as an example.
+                    .append("\"}");
+
+            try {
+                ObjectMapper objectMapper = new ObjectMapper();
+                return objectMapper.readTree(stringBuilder.toString());
+            } catch (Exception e) {
+                throw e;
+            }
+        }
+
+        private String escapeJsonString(String input) {
+            // Replace special characters with their escaped versions
+            return input
+                    .replace("\\", "\\\\")
+                    .replace("\"", "\\\"")
+                    .replace("\n", "\\n")
+                    .replace("\r", "\\r")
+                    .replace("\t", "\\t");
+        }
+
+        public void append_to_json_file() {
+            try {
+
+                File file = new File("assets\\data\\student.json");
+                JSONWriter jfa = new JSONWriter();
+
+                jfa.appendToArray(file, jsonify_object());
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}

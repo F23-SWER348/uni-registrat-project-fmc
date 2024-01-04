@@ -1,15 +1,13 @@
-[
-    {
-      
-          "name": "science",
-        "contact": "science@bethlehem.edu"
-       
-
-    },
-    {
-      
-        "name": "Art",
-        "contact": "art@bethlehem.edu"
-    }
-    
-]
+[ {
+  "name" : "science",
+  "contact" : "science@bethlehem.edu"
+}, {
+  "name" : "Art",
+  "contact" : "art@bethlehem.edu"
+}, {
+  "name" : "science"
+}, {
+  "name" : "science2"
+}, null, {
+  "name" : "science2"
+} ]

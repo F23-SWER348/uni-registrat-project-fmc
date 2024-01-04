@@ -1,13 +1,14 @@
 package com.fmc;
 
+import java.io.File;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.parser.JSONWriter;
 
 public class Semester extends Course {
 
@@ -95,13 +96,46 @@ public class Semester extends Course {
             return "Semester [c=" + c + ", name=" + name + ", year=" + year + ", start=" + start + ", end=" + end + "]";
             
         }
-      
-    // }
-    // public Optional<String> toStringOptional() {
-    //     return Optional.ofNullable(c)
-    //             .map(cValue -> "Semester [c=" + cValue + ", name=" + name +
-    //                     ", year=" + year + ", start=" + start + ", end=" + end + "]")
-    //             .or(() -> Optional.of("Don't have any course in this semester"));
-    // }
 
+        
+    public JsonNode jsonify_object() throws Exception {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("{")
+                .append("\"name\": \"").append(escapeJsonString(name))
+                // .append("\",")
+                // ToDo: Write the other attibutes for this class...
+                // See Course.java as an example.
+                .append("\"}")
+                ;
+
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            return objectMapper.readTree(stringBuilder.toString());
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    private String escapeJsonString(String input) {
+        // Replace special characters with their escaped versions
+        return input
+                .replace("\\", "\\\\")
+                .replace("\"", "\\\"")
+                .replace("\n", "\\n")
+                .replace("\r", "\\r")
+                .replace("\t", "\\t");
+    }
+
+    public void append_to_json_file() {
+        try {
+
+            File file = new File("assets\\data\\Semester.json");
+            JSONWriter jfa = new JSONWriter();
+
+            jfa.appendToArray(file, jsonify_object());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

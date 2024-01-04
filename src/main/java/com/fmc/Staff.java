@@ -1,6 +1,11 @@
 package com.fmc;
 
+import java.io.File;
 import java.util.ArrayList;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.parser.JSONWriter;
 
 public class Staff extends Student {
     ArrayList<Course> staffCourseArray = new ArrayList<>();
@@ -48,7 +53,8 @@ public class Staff extends Student {
         // st.stream().filter(e->e.getStaff().equals(this)).collect(Collectors.toList());
         // (ArrayList<Course>) getCourses;
     }
-// اعطي كورس للمعلم
+
+    // اعطي كورس للمعلم
     public void setCourse(Course course) {
         ArrayList<Course> temp = staffCourse.get(this);
         temp.add(course);
@@ -70,7 +76,7 @@ public class Staff extends Student {
     // }
 
     // }
-// اجيب كورسات المعلم
+    // اجيب كورسات المعلم
     public ArrayList<Course> getCourse() {
         return staffCourseArray;
     }
@@ -82,7 +88,48 @@ public class Staff extends Student {
     @Override
     public String toString() {
         return "  name=" + name + ", email=" + email + ", phoneNumber="
-                + phoneNumber +" \n staffCourse" + this.getCourse()  ;
+                + phoneNumber + " \n staffCourse" + this.getCourse();
+    }
+
+    public JsonNode jsonify_object() throws Exception {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("{")
+                .append("\"name\": \"").append(escapeJsonString(name))
+                // .append("\",")
+                // ToDo: Write the other attibutes for this class...
+                // See Course.java as an example.
+                .append("\"}");
+        
+
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            return objectMapper.readTree(stringBuilder.toString());
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    private String escapeJsonString(String input) {
+        // Replace special characters with their escaped versions
+        return input
+                .replace("\\", "\\\\")
+                .replace("\"", "\\\"")
+                .replace("\n", "\\n")
+                .replace("\r", "\\r")
+                .replace("\t", "\\t");
+    }
+
+    public void append_to_json_file() {
+        try {
+
+            File file = new File("assets\\data\\staff.json");
+            JSONWriter jfa = new JSONWriter();
+
+            jfa.appendToArray(file, jsonify_object());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

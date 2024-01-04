@@ -1,40 +1,43 @@
 package com.fmc;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import com.App.EvaluationTask;
-import com.App.GPATask;
 import com.parser.StudentReader;
 
 public class test {
- StudentReader sr = new StudentReader("assets\\data\\student.json", "assets\\data\\course.json",
-    "assets\\data\\Semester.json", "assets\\data\\staff.json", "assets\\data\\faculty.json");
+StudentReader sr = new StudentReader("assets\\data\\student.json", "assets\\data\\course.json",
+"assets\\data\\Semester.json", "assets\\data\\staff.json", "assets\\data\\faculty.json");
 
- ArrayList<Faculty> facultys = sr.readFaculty();
+ArrayList<Faculty> facultys = sr.readFaculty();
 ArrayList<Staff> staffs = sr.readStaff();
 ArrayList<Semester> semester = sr.readSemester();
 ArrayList<Course> course = sr.readCourse(); 
- ArrayList<Student> student = sr.readStudent();
-    
+ArrayList<Student> student = sr.readStudent();
+ 
+ user user = new user();
+
+ 
+      Staff st = new Staff("odeh rishmawi","or@gmail.com","05963525");
+  st.append_to_json_file();
+ int year = LocalDate.now().getYear();
+ LocalDate DsetDay = LocalDate.of(2021, 1, 1);
+ LocalDate end = LocalDate.of(2023, 1, 1);
+ Faculty science = new Faculty("science", "hjhj");
+science.append_to_json_file();
+ Semester s2023 = new Semester("", year, LocalDate.of(2021, 1, 1), LocalDate.of(2021, 1, 1));
+ s2023.append_to_json_file();
+ Course music = new Course("music","m101",3,st ,s2023,science);
+ music.append_to_json_file();
+
     @Before
     public void setup() throws InterruptedException {    
-  }
+    }
 
     @Test
     public void GPA_TEST() {
@@ -60,7 +63,7 @@ ArrayList<Course> course = sr.readCourse();
     }
 
 
-    String w= "[MB    Scheduleenter the time of each course,JG    ScheduleSchedule  Staff Name =JG    Email :JG@bethlehem.edu, courses=history,hist1   day=TUESDAY, time=10:30 to 11:30schedule have a conflect ? false ,FQ    ScheduleSchedule  Staff Name =FQ    Email :FQ@bethlehem.edu, courses=swer,swer1   day=TUESDAY, time=10:30 to 11:30, courses=swerOS,swer2   day=TUESDAY, time=10:30 to 11:30schedule have a conflect ? true]";
+    String w= "[MBScheduleenterthetimeofeachcourse,JGScheduleScheduleStaffName=JGEmail:JG@bethlehem.edu,courses=history,hist1day=TUESDAY,time=10:30to11:30schedulehaveaconflect?false,FQScheduleScheduleStaffName=FQEmail:FQ@bethlehem.edu,courses=swer,swer1day=TUESDAY,time=10:30to11:30,courses=swerOS,swer2day=TUESDAY,time=10:30to11:30schedulehaveaconflect?true,fatmaScheduleScheduleStaffName=fatmaEmail:nullschedulehaveaconflect?false,MaiScheduleScheduleStaffName=MaiEmail:nullschedulehaveaconflect?false]";
 
     @Test
     public void staffSh() {
@@ -76,7 +79,7 @@ ArrayList<Course> course = sr.readCourse();
     }
 
 
-    String y="[science [Course Name: math---Shortcut: math1---Credits: 4---, Course Name: swer---Shortcut: swer1---Credits: 3---, Course Name: swerOS---Shortcut: swer2---Credits: 3---] ,Art [Course Name: history---Shortcut: hist1---Credits: 3---]]";
+    String y="[science [Course Name: math---Shortcut: math1---Credits: 4---, Course Name: swer---Shortcut: swer1---Credits: 3---, Course Name: swerOS---Shortcut: swer2---Credits: 3---] ,Art [Course Name: history---Shortcut: hist1---Credits: 3---],science[],science2[]]";
 
     
  @Test
@@ -114,5 +117,9 @@ ArrayList<Course> course = sr.readCourse();
    @Test
     public void studentconflect() {
         assertEquals("[true,true,true]", student.stream().map(e->new Schedule(e).conflect()).collect(Collectors.toList()).toString().replaceAll("\\s", ""));
+    }
+     @Test
+    public void course() {
+        assertEquals(user.getAllCourse(), course.stream().map(e->e.getName()).collect(Collectors.toList()));
     }
 }
