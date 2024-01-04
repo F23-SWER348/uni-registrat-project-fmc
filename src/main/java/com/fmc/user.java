@@ -12,11 +12,10 @@ import java.util.stream.Collectors;
 import org.json.simple.JSONArray;
 
 public class user {
-    //مش حاس اله فايدة هاد الكلاس
     // protected Map<Faculty, ArrayList<Course> > FacultyCourse = new HashMap<>();
     static Map<Semester, ArrayList<Course> > semesterCourse = new HashMap<>();
      static Map<Staff, ArrayList<Course> > staffCourse = new HashMap<>();
-    static Map<Student, ArrayList<Course> > courseStudent = new HashMap<>(); //كورسات الطالب 
+    static Map<Student, ArrayList<Course> > courseStudent = new HashMap<>(); //student courses
    static  Map<Faculty, ArrayList<Course> > FacultyCourse = new HashMap<>();
     static ArrayList<Course> CourseList=new ArrayList<>();;
 
@@ -35,7 +34,7 @@ public static Map<Student, ArrayList<Course>> getCourseStudent() {
 public static Map<Faculty, ArrayList<Course>> getFacultyCourse() {
     return FacultyCourse;
 }
-// هاي بتطبع الكورسات المتاحة 
+// print the available courses
 public  String AvaliableCourses() {
 
   CourseList.stream().distinct() .map(e->e.getStudent().size()<29 ?  e.getName():null).filter( m->m!=null).forEach(e->System.out.println(e));
